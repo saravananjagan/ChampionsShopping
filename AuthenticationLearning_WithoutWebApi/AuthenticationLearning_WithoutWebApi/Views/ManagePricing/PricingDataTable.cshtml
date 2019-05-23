@@ -1,0 +1,39 @@
+﻿@using System.Data;
+@using AuthenticationLearning_WithoutWebApi.Models;
+@{
+    ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
+}
+<table class="table table-striped datatable">
+    <thead><tr><th>Product Id</th><th>Product Name</th><th>Buy Price</th><th>Sell Price</th><th>Profit</th><th>MRP</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (DataRow row in managePricing_IndexViewModel.PricingDataTable.Rows)
+        {
+            <tr>
+                <td>@row["ProductId"].ToString()</td>
+                <td>@row["ProductName"].ToString()</td>
+                <td>@row["BuyPrice"].ToString()</td>
+                <td>@row["SellPrice"].ToString()</td>
+                <td>@row["Profit"].ToString()</td>
+                <td>@row["MRP"].ToString()</td>
+                <td><a href="#" onclick="UpdatePricingModal('@row["ProductPricingId"]','@row["ProductId"]','@row["ProductName"]','@row["BuyPrice"]','@row["SellPrice"]','@row["Profit"]','@row["MRP"]')"><i class="fa fa-pencil"></i></a>&emsp;<a href="#" onclick="DeletePricing('@row["ProductPricingId"]','@row["ProductId"]')"><i class="fa fa-trash-o"></i></a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $(".datatable").DataTable();
+        var ErrorMessage = "@managePricing_IndexViewModel.ErrorMessage";
+        var SuccessMessage="@managePricing_IndexViewModel.SuccessMessage";
+        if (ErrorMessage != null && ErrorMessage != "" && ErrorMessage != undefined) {
+            $("#ErrorMessage_js").html(ErrorMessage);
+            var ErrorAlert = $("#temp_element_error").html();
+            $("#UploadExcelContainer").prepend(ErrorAlert);
+        }
+        if (SuccessMessage != null && SuccessMessage != "" && SuccessMessage != undefined) {
+            $("#SuccessMessage_js").html(SuccessMessage);
+            var SuccessAlert = $("#temp_element_success").html();
+            $("#UploadExcelContainer").prepend(SuccessAlert);
+        }
+    });
+</script>

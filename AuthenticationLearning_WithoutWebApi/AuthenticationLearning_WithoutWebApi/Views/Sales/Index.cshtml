@@ -1,0 +1,46 @@
+﻿@using AuthenticationLearning_WithoutWebApi.Models;
+@{
+    ViewBag.Title = "Index";
+    ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
+}
+
+
+<div class="container">
+    <h4>Champions Pricing Details</h4>
+    <hr />
+</div>
+<div class="container" id="ChampionsCallBackContainer">
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.ErrorMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Please correct the following errors:</strong> <br />
+            <div id="ErrorMessage">@managePricing_IndexViewModel.ErrorMessage</div>
+        </div>
+    }
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.SuccessMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.SuccessMessage))
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong id="SuccessMessage">@managePricing_IndexViewModel.SuccessMessage</strong>
+        </div>
+    }
+</div>
+<div class="container" id="ChampionsPricingGrid">
+    @{
+        Html.RenderPartial("ChampionsPricingGrid", managePricing_IndexViewModel);
+    }
+</div><!--/container-->
+<div id="temp_element_error" style="display:none;">
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Please correct the following errors:</strong> <br />
+        <div id="ErrorMessage_js"></div>
+    </div>
+</div>
+<div id="temp_element_success" style="display:none;">
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong id="SuccessMessage_js"></strong>
+    </div>
+</div>

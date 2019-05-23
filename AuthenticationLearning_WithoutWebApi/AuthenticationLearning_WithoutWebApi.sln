@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationLearning_WithoutWebApi", "AuthenticationLearning_WithoutWebApi\AuthenticationLearning_WithoutWebApi.csproj", "{691DD58D-B4D0-4C9A-838C-39779B738569}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSIDAL", "PMSIDAL\PMSIDAL.csproj", "{93D8F74A-44E1-47C3-BC8C-D67442CA728E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSDAL", "PMSDAL\PMSDAL.csproj", "{ABE7F544-8A1B-47BD-8876-109E0877AF74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMSService", "IPMSService\IPMSService.csproj", "{3D44E71D-3D44-40D1-AE5A-B04341FE6DFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSService", "PMSService\PMSService.csproj", "{43C8841D-10B5-476B-87ED-DA291AADE5B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSProxy", "PMSProxy\PMSProxy.csproj", "{C704AAC1-8ED9-490F-9183-CE1EA665B66F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMSModel", "PMSModel\PMSModel.csproj", "{E32D94C3-D690-4696-BA8A-EBD5FDF22140}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{691DD58D-B4D0-4C9A-838C-39779B738569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691DD58D-B4D0-4C9A-838C-39779B738569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691DD58D-B4D0-4C9A-838C-39779B738569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691DD58D-B4D0-4C9A-838C-39779B738569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D8F74A-44E1-47C3-BC8C-D67442CA728E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D8F74A-44E1-47C3-BC8C-D67442CA728E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D8F74A-44E1-47C3-BC8C-D67442CA728E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D8F74A-44E1-47C3-BC8C-D67442CA728E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABE7F544-8A1B-47BD-8876-109E0877AF74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABE7F544-8A1B-47BD-8876-109E0877AF74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABE7F544-8A1B-47BD-8876-109E0877AF74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABE7F544-8A1B-47BD-8876-109E0877AF74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D44E71D-3D44-40D1-AE5A-B04341FE6DFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D44E71D-3D44-40D1-AE5A-B04341FE6DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D44E71D-3D44-40D1-AE5A-B04341FE6DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D44E71D-3D44-40D1-AE5A-B04341FE6DFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43C8841D-10B5-476B-87ED-DA291AADE5B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43C8841D-10B5-476B-87ED-DA291AADE5B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43C8841D-10B5-476B-87ED-DA291AADE5B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43C8841D-10B5-476B-87ED-DA291AADE5B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C704AAC1-8ED9-490F-9183-CE1EA665B66F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C704AAC1-8ED9-490F-9183-CE1EA665B66F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C704AAC1-8ED9-490F-9183-CE1EA665B66F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C704AAC1-8ED9-490F-9183-CE1EA665B66F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E32D94C3-D690-4696-BA8A-EBD5FDF22140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E32D94C3-D690-4696-BA8A-EBD5FDF22140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E32D94C3-D690-4696-BA8A-EBD5FDF22140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E32D94C3-D690-4696-BA8A-EBD5FDF22140}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DCEE796A-597E-4A6D-81BB-94521323B9A4}
+	EndGlobalSection
+EndGlobal

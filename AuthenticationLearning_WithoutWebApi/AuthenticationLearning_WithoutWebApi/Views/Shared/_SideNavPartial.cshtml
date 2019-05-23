@@ -1,0 +1,13 @@
+﻿@using System.Data
+@{
+    DataTable MenuTable = new DataTable();
+    if (Model != null)
+    {
+        MenuTable = Model;
+    }
+}
+
+@foreach(DataRow MenuDetail in MenuTable.Rows)
+{
+    <li><a href="@MenuDetail["ModuleURL"]">@MenuDetail["ModuleDisplayName"]</a></li>
+}

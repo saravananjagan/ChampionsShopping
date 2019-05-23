@@ -1,0 +1,220 @@
+﻿@using System.Data;
+@using AuthenticationLearning_WithoutWebApi.Constants;
+@using AuthenticationLearning_WithoutWebApi.Models;
+@{
+    ViewBag.Title = "Index";
+    ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
+}
+<div class="container-fluid">
+    <h4>Manage Pricing Details</h4>
+    <hr />
+</div>
+<div class="container-fluid" id="UploadExcelContainer">
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.ErrorMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Please correct the following errors:</strong> <br />
+            <div id="ErrorMessage">@managePricing_IndexViewModel.ErrorMessage</div>
+        </div>
+    }
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.SuccessMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.SuccessMessage))
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong id="SuccessMessage">@managePricing_IndexViewModel.SuccessMessage</strong>
+        </div>
+    }
+
+    @using (Html.BeginForm("UploadPricingDetails", "ManagePricing", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-2 control-label">Excel:</div>
+                <div class="col-md-10">
+                    <input type="file" id="FileUpload" name="FileUpload" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary" />&emsp;
+                    <input type="button" value="Add Individual Pricing Details" id="btnSubmit" class="btn btn-primary" onclick="$('#InsertPricingModal').modal()" /><br />
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="container-fluid" id="ManagePricingDataTable">
+    @{
+        Html.RenderPartial("PricingDataTable", managePricing_IndexViewModel);
+    }
+</div>
+
+<div id="UpdatePricingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="myModalLabel">Update Pricing</h3>
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    Product Id :&nbsp;<input type="text" class="form-control form-control-sm" id="ProductId" placeholder="Product Id">
+                    Product Name :&nbsp;<input type="text" class="form-control form-control-sm" id="ProductName" placeholder="Product Name">
+                    Buy Price :&nbsp;<input type="text" class="form-control form-control-sm" id="BuyPrice" placeholder="Buy Price">
+                    Sell Price :&nbsp;<input type="text" class="form-control form-control-sm" id="SellPrice" placeholder="Sell Price">
+                    Profit :&nbsp;<input type="text" class="form-control form-control-sm" id="Profit" placeholder="Profit">
+                    MRP :&nbsp;<input type="text" class="form-control form-control-sm" id="MRP" placeholder="MRP">
+                    <input type="hidden" id="ProductPricingId" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel/Close</button>
+                <button class="btn btn-primary" onclick="UpdatePricingDetails()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="InsertPricingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="myModalLabel">Add Pricing Details</h3>
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    Product Id :&nbsp;<input type="text" class="form-control form-control-sm" id="ProductId_Insert" placeholder="Product Id">
+                    Product Name :&nbsp;<input type="text" class="form-control form-control-sm" id="ProductName_Insert" placeholder="Product Name">
+                    Buy Price :&nbsp;<input type="text" class="form-control form-control-sm" id="BuyPrice_Insert" placeholder="Buy Price">
+                    Sell Price :&nbsp;<input type="text" class="form-control form-control-sm" id="SellPrice_Insert" placeholder="Sell Price">
+                    Profit :&nbsp;<input type="text" class="form-control form-control-sm" id="Profit_Insert" placeholder="Profit">
+                    MRP :&nbsp;<input type="text" class="form-control form-control-sm" id="MRP_Insert" placeholder="MRP">
+                    <input type="hidden" id="ProductPricingId_Insert" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel/Close</button>
+                <button class="btn btn-primary" onclick="InsertPricingDetails()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="DeletePricingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="myModalLabel">Delete Pricing</h3>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <h5><i><strong>Are you Sure, You want to Delete this Pricing detail for <a href="#" id="ProductId_Delete"></a>?</strong></i></h5>
+                    <input type="hidden" id="ProductPricingId_Delete" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel/Close</button>
+                <button class="btn btn-primary" onclick="DeletePricingDetails()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="temp_element_error" style="display:none;">
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Please correct the following errors:</strong> <br />
+        <div id="ErrorMessage_js"></div>
+    </div>
+</div>
+<div id="temp_element_success" style="display:none;">
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong id="SuccessMessage_js"></strong>
+    </div>
+</div>
+
+<script>
+        function UpdatePricingModal(ProductPricingId, ProductId, ProductName, BuyPrice, SellPrice, Profit, MRP) {
+            $("#ProductPricingId").val(ProductPricingId);
+            $("#ProductId").val(ProductId);
+            $("#ProductName").val(ProductName);
+            $("#BuyPrice").val(BuyPrice);
+            $("#SellPrice").val(SellPrice);
+            $("#Profit").val(Profit);
+            $("#MRP").val(MRP);
+            $("#UpdatePricingModal").modal();
+        }
+        function UpdatePricingDetails() {
+            var PricingDetailsModel = {
+                ProductPricingId:$("#ProductPricingId_Insert").val(),
+                ProductId:$("#ProductId_Insert").val(),
+                ProductName:$("#ProductName_Insert").val(),
+                BuyPrice:$("#BuyPrice_Insert").val(),
+                SellPrice:$("#SellPrice_Insert").val(),
+                Profit:$("#Profit_Insert").val(),
+                MRP:$("#MRP_Insert").val()
+            }
+            $.ajax({
+                url:'@Url.Action("AddPricingDetails", "ManagePricing")',
+                type: 'POST',
+                data: PricingDetailsModel,
+                success: function (data) {
+                  $("#ManagePricingDataTable").html(data);
+                    $("#UpdatePricingModal").modal('toggle');
+                },
+                error: function (e) {
+                    alert("Something wrong. Please check the internet connection!!!");
+                }
+            });
+
+    }
+
+    function InsertPricingDetails() {
+            var PricingDetailsModel = {
+                ProductPricingId: $("#ProductPricingId_Insert").val(),
+                ProductId: $("#ProductId_Insert").val(),
+                ProductName: $("#ProductName_Insert").val(),
+                BuyPrice: $("#BuyPrice_Insert").val(),
+                SellPrice: $("#SellPrice_Insert").val(),
+                Profit: $("#Profit_Insert").val(),
+                MRP: $("#MRP_Insert").val()
+            }
+            $.ajax({
+                url:'@Url.Action("AddPricingDetails", "ManagePricing")',
+                type: 'POST',
+                data: PricingDetailsModel,
+                success: function (data) {
+                  $("#ManagePricingDataTable").html(data);
+                    $("#InsertPricingModal").modal('toggle');
+                },
+                error: function (e) {
+                    alert("Something wrong. Please check the internet connection!!!");
+                }
+            });
+
+    }
+
+    function DeletePricing(ProductPricingId, ProductId) {
+        $("#ProductId_Delete").html(ProductId);
+        $("#ProductPricingId_Delete").val(ProductPricingId);
+        $("#DeletePricingModal").modal();
+    }
+    function DeletePricingDetails() {
+        var ProductPricingId = $("#ProductPricingId_Delete").val();
+        $.ajax({
+            url: '@Url.Action("DeletePricingDetails", "ManagePricing")',
+            type: 'POST',
+            data: { ProductPricingId: ProductPricingId },
+            success: function (data) {
+                $("#ManagePricingDataTable").html(data);
+                $("#DeletePricingModal").modal('toggle');
+                },
+                error: function (e) {
+                    alert("Something wrong. Please check the internet connection!!!");
+                }
+            });
+    }
+</script>

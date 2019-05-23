@@ -1,0 +1,14 @@
+D:\PLA\Pricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.exe.config
+D:\PLA\Pricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.exe
+D:\PLA\Pricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.pdb
+D:\PLA\Pricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csprojAssemblyReference.cache
+D:\PLA\Pricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csproj.CoreCompileInputs.cache
+D:\PLA\Pricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.exe
+D:\PLA\Pricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.pdb
+E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.exe.config
+E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.exe
+E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.pdb
+E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csprojAssemblyReference.cache
+E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csproj.CoreCompileInputs.cache
+E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.exe
+E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.pdb
