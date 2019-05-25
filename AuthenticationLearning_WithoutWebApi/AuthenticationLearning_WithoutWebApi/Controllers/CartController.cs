@@ -18,11 +18,12 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
         private ManagePricing_IndexViewModel managePricing_IndexViewModel;
         public ActionResult Index()
         {
+            managePricing_IndexViewModel = new ManagePricing_IndexViewModel();
             if (User.Identity.IsAuthenticated)
             {
                 if (isValidUser())
                 {
-                    managePricing_IndexViewModel = new ManagePricing_IndexViewModel();
+                    managePricing_IndexViewModel.IsChampion = true;
                     DataSet PricingDataSet = new DataSet();
                     DataTable PricingDataTable = new DataTable();
                     string UserId = User.Identity.GetUserId();
@@ -44,8 +45,12 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+
+
         private bool isValidUser()
         {
+            managePricing_IndexViewModel = new ManagePricing_IndexViewModel();
             if (User.Identity.IsAuthenticated)
             {
                 var user = User.Identity;
@@ -54,10 +59,12 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                 var s = UserManager.GetRoles(user.GetUserId());
                 if (s[0].ToString() == "Champion")
                 {
+                    managePricing_IndexViewModel.IsChampion = true;
                     return true;
                 }
                 else
                 {
+                    managePricing_IndexViewModel.IsChampion = false;
                     return false;
                 }
             }

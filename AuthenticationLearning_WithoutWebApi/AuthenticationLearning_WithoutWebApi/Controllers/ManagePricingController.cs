@@ -1,5 +1,6 @@
 ﻿using AuthenticationLearning_WithoutWebApi.Constants;
 using AuthenticationLearning_WithoutWebApi.Models;
+using ICSharpCode.SharpZipLib.Zip;
 using LinqToExcel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Data.OleDb;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -267,6 +269,59 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        [HttpPost]
+        public JsonResult UploadImages(HttpPostedFileBase ImageZip)
+        {
+            List<String> imagesList = new List<string>();
+            List<string> inValidphotosList = new List<string>();
+            using (ZipInputStream s= new ZipInputStream(ImageZip.InputStream))
+            {
+                ZipEntry theEntry;
+                while ((theEntry = s.GetNextEntry()) != null)
+                {
+                    string fileName = Path.GetFileName(theEntry.Name);
+                    if (fileName != String.Empty)
+                    {
+                        FileInfo info = new FileInfo(theEntry.Name);
+                        if (info.Extension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) || info.Extension.Equals(".png", StringComparison.OrdinalIgnoreCase) || info.Extension.Equals(".gif", StringComparison.OrdinalIgnoreCase) || info.Extension.Equals(".bmp", StringComparison.OrdinalIgnoreCase))
+                        {
+                            imagesList.Add(info.Name);
+                            if ((theEntry.Size / 1024f) / 1024f >= 2)
+                            {
+                                if (!inValidphotosList.Contains(info.Name))
+                                {
+                                    inValidphotosList.Add(info.Name);
+                                    continue;
+                                }
+                                imagesList.Remove(info.Name);
+                            }
+                            string directoryName = "C:\\Users\\Public\\CHImages\\Photos";
+                            Directory.CreateDirectory(directoryName);
+                            using (FileStream streamWriter = System.IO.File.Create(directoryName + "\\" + info.Name))
+                            {
+                                int size = 2048;
+                                byte[] data = new byte[2048];
+                                while (true)
+                                {
+                                    size = s.Read(data, 0, data.Length);
+                                    if (size > 0)
+                                    {
+                                        streamWriter.Write(data, 0, size);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+                return Json("success", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
