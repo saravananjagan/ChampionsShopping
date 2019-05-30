@@ -32,5 +32,10 @@ namespace PMSProxy.Pricing
             IPricingDetailsService pricingDetailsService = new PricingDetailsService();
             return pricingDetailsService.FetchUserPricingDetails(UserId);
         }
+        public static bool InsertBulkPricingPhotoDetails(string ImportValues)
+        {
+            IPricingDetailsService pricingDetailsService = new PricingDetailsService();
+            return pricingDetailsService.InsertBulkPricingPhotoDetails(ImportValues);
+        }
     }
 }

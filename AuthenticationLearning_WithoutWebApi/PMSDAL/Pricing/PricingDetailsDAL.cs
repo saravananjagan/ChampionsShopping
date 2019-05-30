@@ -116,5 +116,20 @@ namespace PMSDAL.Pricing
                 dataSet = null;
             }
         }
+
+        public bool InsertBulkPricingPhotoDetails(string ImportValues)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand("dbo.USP_ImportPhotoDetails", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add("@ImportValues", SqlDbType.VarChar).Value = ImportValues;
+                connection.Open();
+                sqlCommand.CommandTimeout = 120;
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+            }
+            return true;
+        }
     }
 }

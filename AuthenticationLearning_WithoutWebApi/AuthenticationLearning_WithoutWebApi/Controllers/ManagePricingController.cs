@@ -16,6 +16,8 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.IO.Compression;
+using System.Drawing;
 
 namespace AuthenticationLearning_WithoutWebApi.Controllers
 {
@@ -325,6 +327,37 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
         }
 
         [HttpPost]
+        public ActionResult UploadProductImages(HttpPostedFileBase ImageZip)
+        {
+
+            string filename = ImageZip.FileName;
+            string zippath = Server.MapPath("~/Zip/");
+            string ExtractPath = Server.MapPath("~/ZipExtract/");
+            zippath = zippath + filename;
+            try
+            {
+                if (isAdminUser())
+                {
+                    ImageZip.SaveAs(zippath);
+                    System.IO.Compression.ZipFile.ExtractToDirectory(zippath, ExtractPath);
+                    string ImportValues = ProcessDirectory(ExtractPath);
+                    bool uploadResult=PricingDetailsProxy.InsertBulkPricingPhotoDetails(ImportValues);
+                    managePricing_IndexViewModel.SuccessMessage = UploadConstants.UploadSuccessMessage;
+                    return RedirectToAction("Index", "ManagePricing", managePricing_IndexViewModel);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            catch(Exception e)
+            {
+                managePricing_IndexViewModel.ErrorMessage = CUDConstants.InsertError;
+                return RedirectToAction("Index", "ManagePricing", managePricing_IndexViewModel);
+            }            
+        }
+
+        [HttpPost]
         public ActionResult UpdatePricingDetails(PricingData pricingData)
         {
             if (User.Identity.IsAuthenticated)
@@ -512,5 +545,117 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
             }
             return false;
         }
+
+        private string ProcessDirectory(string targetDirectory)
+        {
+            StringBuilder imageImportValues = new StringBuilder();
+            string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
+            foreach (string subdirectory in subdirectoryEntries)
+            {
+                string[] fileEntries = Directory.GetFiles(subdirectory);
+                //string DirectoryName = Path.GetDirectoryName(subdirectory);
+                string DirectoryName = new DirectoryInfo(subdirectory).Name;
+                foreach (string filepath in fileEntries)
+                {
+                    string Photo=ProcessFile(filepath);
+                    string value = "('" + DirectoryName + "','" + Photo + "'),";
+                    imageImportValues.Append(value);
+                }
+            }
+            string ImportData = imageImportValues.ToString();
+            ImportData = ImportData.Substring(0, ImportData.Length - 1);
+            return ImportData;
+        }
+
+        private string ProcessFile(string filepath)
+        {
+            ///TODO: Convert image to Base64 format and insert to a photo mapping table against ProductPricingId. Here select the Product Pricing Id using Product Id which is the filename.
+            string Photo = ImageToBase64(filepath,360,360);
+            return Photo;
+        }
+
+        private static string ImageToBase64(string FilePath, int Height, int Width)
+        {
+            string base64String = string.Empty;
+            using (System.Drawing.Image image = System.Drawing.Image.FromFile(FilePath))
+            {
+                using (MemoryStream m = new MemoryStream())
+                {
+                    image.Save(m, image.RawFormat);
+                    byte[] imageBytes = m.ToArray();
+                    imageBytes = CreateThumbnail(imageBytes, Height, Width);
+                    base64String = Convert.ToBase64String(imageBytes);
+                    return base64String;
+                }
+            }
+        }
+
+        private static byte[] CreateThumbnail(byte[] PassedImage, int Height, int width)
+        {
+            byte[] ReturnedThumbnail;
+
+            using (MemoryStream StartMemoryStream = new MemoryStream(),
+                                NewMemoryStream = new MemoryStream())
+            {
+                // write the string to the stream  
+                StartMemoryStream.Write(PassedImage, 0, PassedImage.Length);
+
+                // create the start Bitmap from the MemoryStream that contains the image  
+                Bitmap startBitmap = new Bitmap(StartMemoryStream);
+
+                // set thumbnail height and width proportional to the original image.  
+                int newHeight;
+                int newWidth;
+                double HW_ratio;
+
+                if (startBitmap.Height > 360 || startBitmap.Width > 360)
+                {
+                    if (startBitmap.Height > startBitmap.Width)
+                    {
+                        newHeight = Height;
+                        HW_ratio = (double)((double)Height / (double)startBitmap.Height);
+                        newWidth = (int)(HW_ratio * (double)startBitmap.Width);
+                    }
+                    else
+                    {
+                        newWidth = width;
+                        HW_ratio = (double)((double)width / (double)startBitmap.Width);
+                        newHeight = (int)(HW_ratio * (double)startBitmap.Height);
+                    }
+                }
+                else
+                {
+                    newHeight = startBitmap.Height;
+                    newWidth = startBitmap.Width;
+                }
+
+                // create a new Bitmap with dimensions for the thumbnail.  
+                Bitmap newBitmap = new Bitmap(newWidth, newHeight);
+
+                // Copy the image from the START Bitmap into the NEW Bitmap.  
+                // This will create a thumnail size of the same image.  
+                newBitmap = ResizeImage(startBitmap, newWidth, newHeight);
+
+                // Save this image to the specified stream in the specified format.  
+                newBitmap.Save(NewMemoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                // Fill the byte[] for the thumbnail from the new MemoryStream.  
+                ReturnedThumbnail = NewMemoryStream.ToArray();
+            }
+
+            // return the resized image as a string of bytes.  
+            return ReturnedThumbnail;
+        }
+        private static Bitmap ResizeImage(Bitmap image, int width, int height)
+        {
+            Bitmap resizedImage = new Bitmap(width, height);
+            using (Graphics gfx = Graphics.FromImage(resizedImage))
+            {
+                gfx.DrawImage(image, new Rectangle(0, 0, width, height),
+                    new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
+            }
+            return resizedImage;
+        }
+
     }       
 }

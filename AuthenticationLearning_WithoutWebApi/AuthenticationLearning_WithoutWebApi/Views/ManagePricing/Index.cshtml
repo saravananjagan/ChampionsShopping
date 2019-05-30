@@ -44,6 +44,24 @@
         </div>
     }
 
+    @using (Html.BeginForm("UploadProductImages", "ManagePricing", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-2 control-label">ImageZip:</div>
+                <div class="col-md-10">
+                    <input type="file" id="ImageZip" name="ImageZip" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary" />&emsp;
+                    @*<input type="button" value="Add Individual Pricing Details" id="btnSubmit" class="btn btn-primary" onclick="$('#InsertPricingModal').modal()" /><br />*@
+                </div>
+            </div>
+        </div>
+    }
+
 </div>
 <div class="container-fluid" id="ManagePricingDataTable">
     @{

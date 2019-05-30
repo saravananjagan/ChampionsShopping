@@ -59,3 +59,6 @@ E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\IPMSS
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\IPMSService\obj\Debug\IPMSService.csproj.CopyComplete
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\IPMSService\obj\Debug\IPMSService.exe
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\IPMSService\obj\Debug\IPMSService.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\IPMSService\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\IPMSService\bin\Debug\ICSharpCode.SharpZipLib.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\IPMSService\bin\Debug\ICSharpCode.SharpZipLib.xml

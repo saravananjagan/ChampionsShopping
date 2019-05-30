@@ -68,5 +68,19 @@ namespace PMSService.Pricing
             }
             return dataSet;
         }
+
+        public bool InsertBulkPricingPhotoDetails(string ImportValues)
+        {
+            try
+            {
+                IPricingDetailsDAL pricingDetailsDAL = new PricingDetailsDAL();
+                pricingDetailsDAL.InsertBulkPricingPhotoDetails(ImportValues);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

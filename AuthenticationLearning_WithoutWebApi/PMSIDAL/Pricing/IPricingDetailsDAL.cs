@@ -14,5 +14,6 @@ namespace PMSIDAL.Pricing
         DataSet FetchPricingDetails();
         bool CUDPricingDetails(PricingData pricingData, string QuerySelector);
         DataSet FetchUserPricingDetails(string UserId);
+        bool InsertBulkPricingPhotoDetails(string ImportValues);
     }
 }

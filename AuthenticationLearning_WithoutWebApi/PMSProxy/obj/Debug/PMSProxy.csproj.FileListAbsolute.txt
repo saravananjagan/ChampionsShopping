@@ -107,3 +107,6 @@ E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSPr
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSProxy\obj\Debug\PMSProxy.csproj.CopyComplete
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSProxy\obj\Debug\PMSProxy.exe
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSProxy\obj\Debug\PMSProxy.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSProxy\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSProxy\bin\Debug\ICSharpCode.SharpZipLib.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSProxy\bin\Debug\ICSharpCode.SharpZipLib.xml

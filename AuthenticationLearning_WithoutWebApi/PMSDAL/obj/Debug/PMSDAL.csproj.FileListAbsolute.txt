@@ -71,3 +71,6 @@ E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSDA
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSDAL\obj\Debug\PMSDAL.csproj.CopyComplete
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSDAL\obj\Debug\PMSDAL.exe
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSDAL\obj\Debug\PMSDAL.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSDAL\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSDAL\bin\Debug\ICSharpCode.SharpZipLib.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSDAL\bin\Debug\ICSharpCode.SharpZipLib.xml

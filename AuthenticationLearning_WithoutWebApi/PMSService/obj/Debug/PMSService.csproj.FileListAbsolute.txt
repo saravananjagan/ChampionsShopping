@@ -95,3 +95,6 @@ E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSSe
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSService\obj\Debug\PMSService.csproj.CopyComplete
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSService\obj\Debug\PMSService.exe
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSService\obj\Debug\PMSService.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSService\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSService\bin\Debug\ICSharpCode.SharpZipLib.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSService\bin\Debug\ICSharpCode.SharpZipLib.xml

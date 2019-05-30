@@ -12,3 +12,14 @@ E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\ob
 E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csproj.CoreCompileInputs.cache
 E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.exe
 E:\PLAPricing\PLAPricingProject\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.exe.config
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.exe
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\ICSharpCode.SharpZipLib.pdb
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\ICSharpCode.SharpZipLib.xml
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csprojAssemblyReference.cache
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csproj.CoreCompileInputs.cache
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csproj.CopyComplete
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.exe
+E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.pdb
