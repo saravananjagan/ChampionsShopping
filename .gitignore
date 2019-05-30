@@ -1,0 +1,11 @@
+
+*.lock
+*.config
+AuthenticationLearning_WithoutWebApi/.vs/AuthenticationLearning_WithoutWebApi/v16/.suo
+*.ide
+*.ide-wal
+*.dll
+*.ldf
+*.pdb
+*.exe
+*.exe

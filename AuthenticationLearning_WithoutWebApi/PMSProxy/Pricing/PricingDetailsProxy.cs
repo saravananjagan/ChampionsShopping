@@ -37,5 +37,17 @@ namespace PMSProxy.Pricing
             IPricingDetailsService pricingDetailsService = new PricingDetailsService();
             return pricingDetailsService.InsertBulkPricingPhotoDetails(ImportValues);
         }
-    }
+
+		/// <summary>
+		/// Method to get the Pricing Details by ProductId
+		/// </summary>
+		/// <param name="productId"></param>
+		/// <returns></returns>
+		public static PricingData GetPricingDetailsByProductId(string productId)
+		{
+			IPricingDetailsService pricingDetailsService = new PricingDetailsService();
+			return pricingDetailsService.GetPricingDetailsByProductId(productId);
+		}
+
+	}
 }

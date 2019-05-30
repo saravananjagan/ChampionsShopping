@@ -82,5 +82,21 @@ namespace PMSService.Pricing
             }
             return true;
         }
-    }
+
+		public PricingData GetPricingDetailsByProductId(string productId)
+		{
+			PricingData pricingData = new PricingData();
+			try
+			{
+				IPricingDetailsDAL pricingDetailsDAL = new PricingDetailsDAL();
+				pricingDetailsDAL.GetPricingDetailsByProductId(productId);
+			}
+			catch (Exception e)
+			{
+				//Need to logg errors
+			}
+			return pricingData;
+		}
+
+	}
 }

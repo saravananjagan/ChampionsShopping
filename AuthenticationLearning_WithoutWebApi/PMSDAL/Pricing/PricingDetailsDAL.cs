@@ -131,5 +131,38 @@ namespace PMSDAL.Pricing
             }
             return true;
         }
-    }
+
+		/// <summary>
+		/// Method to get the Pricing Details by ProductId
+		/// </summary>
+		/// <param name="productId"></param>
+		/// <returns></returns>
+		public PricingData GetPricingDetailsByProductId(string productId)
+		{
+			PricingData pricingData = new PricingData();
+			try
+			{
+				using (SqlConnection connection = new SqlConnection(ConnectionString))
+				{
+					SqlDataReader dataReader = null;
+					SqlCommand sqlCommand = new SqlCommand("dbo.USP_FetchProductPricingDetails", connection);
+					sqlCommand.CommandType = CommandType.StoredProcedure;
+					sqlCommand.Parameters.Add("@ProductId",SqlDbType.UniqueIdentifier).Value= productId;
+					connection.Open();
+					dataReader = sqlCommand.ExecuteReader();
+					while (dataReader.Read())
+					{
+						if (dataReader["ProductPricingId"] != null)
+							pricingData.ProductPricingId = dataReader["ProductPricingId"].ToString();
+					}
+					connection.Close();					
+				}
+				return pricingData;
+			}
+			finally
+			{
+				pricingData = null;
+			}
+		}
+	}
 }

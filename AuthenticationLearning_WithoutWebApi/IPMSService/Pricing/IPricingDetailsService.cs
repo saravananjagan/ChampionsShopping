@@ -15,5 +15,7 @@ namespace IPMSService.Pricing
         bool CUDPricingDetails(PricingData pricingData, string QuerySelector);
         DataSet FetchUserPricingDetails(string UserId);
         bool InsertBulkPricingPhotoDetails(string ImportValues);
-    }
+		PricingData GetPricingDetailsByProductId(string productId);
+
+	}
 }

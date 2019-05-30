@@ -590,6 +590,11 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
             }
         }
 
+		private bool ValidateDuplicateProductId(string productId)
+		{
+			PricingData ProductpricingId=PricingDetailsProxy.GetPricingDetailsByProductId(productId);
+		}
+
         private static byte[] CreateThumbnail(byte[] PassedImage, int Height, int width)
         {
             byte[] ReturnedThumbnail;
