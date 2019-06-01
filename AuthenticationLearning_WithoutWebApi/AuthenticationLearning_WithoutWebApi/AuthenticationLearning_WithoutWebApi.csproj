@@ -223,6 +223,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ZipExtract\14\OffCampusInterview.jpg" />
+    <Content Include="ZipExtract\15\deadlock.PNG" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CartDetails.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -235,7 +237,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -279,6 +283,7 @@
     <Content Include="Views\Sales\ChampionsPricingGrid.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\CartView.cshtml" />
+    <Content Include="Zip\14.zip" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

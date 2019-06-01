@@ -343,6 +343,7 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     string ImportValues = ProcessDirectory(ExtractPath);
                     bool uploadResult=PricingDetailsProxy.InsertBulkPricingPhotoDetails(ImportValues);
                     managePricing_IndexViewModel.SuccessMessage = UploadConstants.UploadSuccessMessage;
+                    System.IO.File.Delete(zippath);
                     return RedirectToAction("Index", "ManagePricing", managePricing_IndexViewModel);
                 }
                 else
@@ -558,9 +559,12 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                 foreach (string filepath in fileEntries)
                 {
                     string Photo=ProcessFile(filepath);
-                    string value = "('" + DirectoryName + "','" + Photo + "'),";
+                    string Ordinal = Path.GetFileNameWithoutExtension(filepath);
+                    string value = "('" + DirectoryName + "','" + Photo + "','"+Ordinal+"'),";
                     imageImportValues.Append(value);
+                    System.IO.File.Delete(filepath);
                 }
+                Directory.Delete(subdirectory);
             }
             string ImportData = imageImportValues.ToString();
             ImportData = ImportData.Substring(0, ImportData.Length - 1);
@@ -589,11 +593,6 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                 }
             }
         }
-
-		private bool ValidateDuplicateProductId(string productId)
-		{
-			PricingData ProductpricingId=PricingDetailsProxy.GetPricingDetailsByProductId(productId);
-		}
 
         private static byte[] CreateThumbnail(byte[] PassedImage, int Height, int width)
         {

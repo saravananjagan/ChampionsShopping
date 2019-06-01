@@ -23,3 +23,13 @@ E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSMo
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csproj.CopyComplete
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.exe
 E:\ChampionsPricing\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.pdb
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.exe.config
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.exe
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\PMSModel.pdb
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\ICSharpCode.SharpZipLib.pdb
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\bin\Debug\ICSharpCode.SharpZipLib.xml
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csproj.CoreCompileInputs.cache
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.csproj.CopyComplete
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.exe
+E:\ChampionsProjects\ChampionsShopping\AuthenticationLearning_WithoutWebApi\PMSModel\obj\Debug\PMSModel.pdb
