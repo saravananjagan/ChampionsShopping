@@ -12,9 +12,11 @@ namespace PMSIDAL.Pricing
     {
         bool InsertBulkPricingDetails(string ImportValues);
         DataSet FetchPricingDetails();
+        DataSet FetchPricingDetails(string UserId);
         bool CUDPricingDetails(PricingData pricingData, string QuerySelector);
         DataSet FetchUserPricingDetails(string UserId);
         bool InsertBulkPricingPhotoDetails(string ImportValues);
 		PricingData GetPricingDetailsByProductId(string productId);
+        DataSet FetchCumulativeCartDetails(string UserId);
     }
 }

@@ -11,9 +11,55 @@
         <div class="col-lg-3 col-sm-4 col-xs-6">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    @row["ProductName"].ToString()</div>
+                    @row["ProductName"].ToString()
+                </div>
                 <div class="panel-body">
-                    <center><img src="http://placehold.it/150X150" class="img-circle img-responsive" /></center>
+                    <center>
+                        @*<img src="http://placehold.it/150X150" class="img-responsive" />*@
+
+                        @if (managePricing_IndexViewModel.ProductPhotoMappingDic.ContainsKey(row["ProductPricingId"].ToString()))
+                        {
+                            int count = 1;
+                            <div id="myCarousel_@row["ProductPricingId"].ToString()" class="carousel slide">
+                                <!-- main slider carousel items -->
+                                <div class="carousel-inner">
+
+                                    @foreach (string Photo in managePricing_IndexViewModel.ProductPhotoMappingDic[row["ProductPricingId"].ToString()].ToList())
+                                    {
+                                        if (count == 1)
+                                        {
+                                            <div class="active item" data-slide-number="@count">
+                                                <img src="data:image/png;base64, @Photo" class="img-responsive">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="item" data-slide-number="@count">
+                                                <img src="data:image/png;base64, @Photo" class="img-responsive">
+                                            </div>
+                                        }
+                                        count++;
+                                    }
+                                </div>
+                                <a class="carousel-control left" data-target="#myCarousel_@row["ProductPricingId"].ToString()" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                                <a class="carousel-control right" data-target="#myCarousel_@row["ProductPricingId"].ToString()" data-slide="next"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="myCarousel" class="carousel slide">
+                                <!-- main slider carousel items -->
+                                <div class="carousel-inner">
+                                    <div class="active item" data-slide-number="0">
+                                        <img src="http://placehold.it/1200x480&amp;text=one" class="img-responsive">
+                                    </div>
+                                </div>
+                                <a class="carousel-control left" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                                <a class="carousel-control right" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                            </div>
+                        }
+
+                    </center>
                     <br />
                     <p class="text-center lead">@row["ProductName"].ToString() - @row["ProductId"].ToString()</p>
                     <h5 class="text-center">Buy Price: Rs.@row["BuyPrice"].ToString()</h5>
@@ -24,26 +70,36 @@
 
                     @*<center><button class="btn btn-success" onclick="AddCartItem('@row["ProductPricingId"].ToString()','@row["ProductName"].ToString()','@row["ProductId"].ToString()','@row["BuyPrice"].ToString()','@row["SellPrice"].ToString()','@profit')">Add to Cart</button></center>*@
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="input-group">
-                                <span class="input-group-btn">
-                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus" data-field="" onclick="DecreaseCartQty('@row["ProductPricingId"].ToString()')">
-                                        <span class="glyphicon glyphicon-minus"></span>
-                                    </button>
-                                </span>
-                                <input type="text" id="quantity_@row["ProductPricingId"].ToString()" name="quantity" class="form-control input-number" value="1" min="1">
-                                <span class="input-group-btn">
-                                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="" onclick="IncreaseCartQty('@row["ProductPricingId"].ToString()')">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                </span>
+                        @if (!string.IsNullOrEmpty(@row["IsCartItem"].ToString()) && @row["IsCartItem"].ToString() == "1")
+                        {
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus" data-field="" onclick="DecreaseCartQty('@row["ProductPricingId"].ToString()')">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </button>
+                                    </span>
+                                    <input type="text" id="quantity_@row["ProductPricingId"].ToString()" name="quantity" class="form-control input-number" value="@row["CartItemQuantity"].ToString()" min="1">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="" onclick="IncreaseCartQty('@row["ProductPricingId"].ToString()')">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                                <button class="btn btn-primary" style="border-radius:50%;" id="UpdateCart_@row["ProductPricingId"].ToString()" onclick="UpdateCartItem('@row["ProductPricingId"].ToString()')">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </button>
-                        </div>
+                        }
+                        else
+                        {
+                            <center>
+                                <button class="btn btn-success" onclick="UpdateCartItem('@row["ProductPricingId"].ToString()')">Add</button>
+                                <input type="text" style="display:none;" id="quantity_@row["ProductPricingId"].ToString()" name="quantity" class="form-control input-number" value="1" min="1">
+                            </center>
+                        }
+                        @*<div class="col-md-4">
+            <button class="btn btn-primary" style="border-radius:50%;" id="UpdateCart_@row["ProductPricingId"].ToString()" onclick="UpdateCartItem('@row["ProductPricingId"].ToString()')">
+                <i class="fa fa-shopping-cart"></i>
+            </button>
+        </div>*@
                     </div>
                 </div>
             </div>

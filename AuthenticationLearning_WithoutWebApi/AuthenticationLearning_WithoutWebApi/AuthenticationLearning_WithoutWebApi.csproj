@@ -192,7 +192,7 @@
     <Compile Include="Constants\CUDConstants.cs" />
     <Compile Include="Constants\UploadConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ChampionCheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagePricingController.cs" />
@@ -223,6 +223,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ChampionCheckoutDetails.js" />
     <Content Include="ZipExtract\14\OffCampusInterview.jpg" />
     <Content Include="ZipExtract\15\deadlock.PNG" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -281,8 +282,8 @@
     <Content Include="Views\ManagePricing\PricingDataTable.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Sales\ChampionsPricingGrid.cshtml" />
-    <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Views\Cart\CartView.cshtml" />
+    <Content Include="Views\ChampionCheckout\Index.cshtml" />
+    <Content Include="Views\ChampionCheckout\CartView.cshtml" />
     <Content Include="Zip\14.zip" />
   </ItemGroup>
   <ItemGroup>

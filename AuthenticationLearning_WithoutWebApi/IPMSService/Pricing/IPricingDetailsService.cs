@@ -16,6 +16,8 @@ namespace IPMSService.Pricing
         DataSet FetchUserPricingDetails(string UserId);
         bool InsertBulkPricingPhotoDetails(string ImportValues);
 		PricingData GetPricingDetailsByProductId(string productId);
+        DataSet FetchPricingDetails(string UserId);
+        DataSet FetchCumulativeCartDetails(string UserId);
 
-	}
+    }
 }

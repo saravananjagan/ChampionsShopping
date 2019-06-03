@@ -4,9 +4,17 @@
     ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
 }
 
-
+<br />
 <div class="container">
-    <h4>Champions Pricing Details</h4>
+
+    @if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
+    {
+        <h4> Champions Pricing Details &emsp; (Total Items - @managePricing_IndexViewModel.TotalItems and Total Buy Value - Rs.@managePricing_IndexViewModel.TotalBuyValue)</h4>
+    }
+    else
+    {
+        <h4>Champions Pricing Details</h4>
+    }
     <hr />
 </div>
 <div class="container" id="ChampionsCallBackContainer">

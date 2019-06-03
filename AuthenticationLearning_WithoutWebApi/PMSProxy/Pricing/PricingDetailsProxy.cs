@@ -22,6 +22,16 @@ namespace PMSProxy.Pricing
             IPricingDetailsService pricingDetailsService = new PricingDetailsService();
             return pricingDetailsService.FetchPricingDetails();
         }
+        public static DataSet FetchPricingDetails(string UserId)
+        {
+            IPricingDetailsService pricingDetailsService = new PricingDetailsService();
+            return pricingDetailsService.FetchPricingDetails(UserId);
+        }
+        public static DataSet FetchCumulativeCartDetails(string UserId)
+        {
+            IPricingDetailsService pricingDetailsService = new PricingDetailsService();
+            return pricingDetailsService.FetchCumulativeCartDetails(UserId);
+        }
         public static bool CUDPricingDetails(PricingData pricingData, string QuerySelector)
         {
             IPricingDetailsService pricingDetailsService = new PricingDetailsService();

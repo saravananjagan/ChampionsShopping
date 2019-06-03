@@ -13,5 +13,8 @@ namespace AuthenticationLearning_WithoutWebApi.Models
         public DataTable PricingDataTable { get; set; }
         public string UserId { get; set; }
         public bool IsChampion { get; set; }
+        public Dictionary<string, List<string>> ProductPhotoMappingDic { get; set;   }
+        public string TotalItems { get; set; }
+        public string TotalBuyValue { get; set; }
     }
 }

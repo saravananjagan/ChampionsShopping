@@ -41,6 +41,37 @@ namespace PMSService.Pricing
             }
             return dataSet;
         }
+
+        public DataSet FetchPricingDetails(string UserId)
+        {
+            DataSet dataSet = new DataSet();
+            try
+            {
+                IPricingDetailsDAL pricingDetailsDAL = new PricingDetailsDAL();
+                dataSet = pricingDetailsDAL.FetchPricingDetails(UserId);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return dataSet;
+        }
+
+        public DataSet FetchCumulativeCartDetails(string UserId)
+        {
+            DataSet dataSet = new DataSet();
+            try
+            {
+                IPricingDetailsDAL pricingDetailsDAL = new PricingDetailsDAL();
+                dataSet = pricingDetailsDAL.FetchCumulativeCartDetails(UserId);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return dataSet;
+        }
+
         public bool CUDPricingDetails(PricingData pricingData,string QuerySelector)
         {
             try

@@ -36,6 +36,7 @@ function IncreaseCartQty(ProductPricingId) {
     // If is not undefined
     $("#quantity_" + ProductPricingId).val(quantity + 1);
         // Increment
+    UpdateCartItem(ProductPricingId);
 }
 
 function DecreaseCartQty(ProductPricingId) {
@@ -47,7 +48,11 @@ function DecreaseCartQty(ProductPricingId) {
     // Increment
     if (quantity > 1) {
         $("#quantity_" + ProductPricingId).val(quantity - 1);
+        UpdateCartItem(ProductPricingId);
+    } else {
+        DeleteCartItem(ProductPricingId);
     }
+    
 }
 
 function AddCartItem(ProductPricingId, ProductName, ProductId, BuyPrice, SellPrice, profit) {
@@ -69,6 +74,38 @@ function UpdateCartItem(ProductPricingId) {
         data: { ProductPricingId: ProductPricingId, CartItemQuantity: CartItemQuantity },
         success: function (data) {
             $("#ChampionsPricingGrid").html(data);
+            GetCartCount();
+        },
+        error: function (e) {
+            alert("Something wrong. Please check the internet connection!!!");
+        }
+    });
+}
+
+function DeleteCartItem(ProductPricingId) {
+    $.ajax({
+        url: '../Sales/DeleteCartItem',
+        type: 'POST',
+        data: { ProductPricingId: ProductPricingId },
+        success: function (data) {
+            $("#ChampionsPricingGrid").html(data);
+            GetCartCount();
+        },
+        error: function (e) {
+            alert("Something wrong. Please check the internet connection!!!");
+        }
+    });
+}
+
+function GetCartCount() {
+    $.ajax({
+        url: '../Sales/GetCartCount',
+        type: 'GET',
+        success: function (data) {
+            var cartElement = $("#Cart");
+            var count = data;
+            var checkoutElement = "<i class=\"fa fa-shopping-cart\"></i>&nbsp;Checkout(" + count + ")";
+            cartElement.html(checkoutElement);
         },
         error: function (e) {
             alert("Something wrong. Please check the internet connection!!!");

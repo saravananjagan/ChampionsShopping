@@ -52,6 +52,55 @@ namespace PMSDAL.Pricing
             }
         }
 
+        public DataSet FetchPricingDetails(string UserId)
+        {
+            DataSet dataSet = new DataSet();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("dbo.USP_FetchProductPricingDetails", connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.Add("@UserId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UserId);
+                    connection.Open();
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
+                    dataAdapter.Fill(dataSet);
+                    connection.Close();
+                    dataAdapter.Dispose();
+                }
+                return dataSet;
+            }
+            finally
+            {
+                dataSet = null;
+            }
+        }
+
+        public DataSet FetchCumulativeCartDetails(string UserId)
+        {
+            DataSet dataSet = new DataSet();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("dbo.USP_FetchProductPricingDetails", connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.Add("@UserId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UserId);
+                    sqlCommand.Parameters.Add("@CumulativeCartInfo", SqlDbType.Bit).Value = 1;                    
+                    connection.Open();
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
+                    dataAdapter.Fill(dataSet);
+                    connection.Close();
+                    dataAdapter.Dispose();
+                }
+                return dataSet;
+            }
+            finally
+            {
+                dataSet = null;
+            }
+        }
+
         public bool CUDPricingDetails(PricingData pricingData,string QuerySelector)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))

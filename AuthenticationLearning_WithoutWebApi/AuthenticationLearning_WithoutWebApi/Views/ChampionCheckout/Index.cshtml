@@ -1,0 +1,76 @@
+﻿@using AuthenticationLearning_WithoutWebApi.Models;
+@{
+    ViewBag.Title = "Index";
+    ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
+}
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
+            {
+                <h4>My Cart <i>&emsp;Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</i></h4>
+            }
+            else
+            {
+                <h4>My Cart</h4>
+            }
+
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-link" onclick="window.location.href='../Sales/Index'" style="float:right;">
+                <i class="fa fa-arrow-left"></i>&emsp;Continue Shopping
+            </button>
+        </div>
+
+    </div>
+    <hr />
+</div>
+<div class="container" id="CallBackContainer">
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.ErrorMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Please correct the following errors:</strong> <br />
+            <div id="ErrorMessage">@managePricing_IndexViewModel.ErrorMessage</div>
+        </div>
+    }
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.SuccessMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.SuccessMessage))
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong id="SuccessMessage">@managePricing_IndexViewModel.SuccessMessage</strong>
+        </div>
+    }
+</div>
+<div class="container" id="CartViewGrid">
+    @{
+        Html.RenderPartial("CartView", managePricing_IndexViewModel);
+    }
+</div><!--/container-->
+@if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
+{
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-header">
+                <h4 style="color:white;">Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
+            </div>
+        </div>
+    </div>
+}
+<div id="temp_element_error" style="display:none;">
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Please correct the following errors:</strong> <br />
+        <div id="ErrorMessage_js"></div>
+    </div>
+</div>
+<div id="temp_element_success" style="display:none;">
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong id="SuccessMessage_js"></strong>
+    </div>
+</div>
+
+
+
