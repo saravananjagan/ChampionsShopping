@@ -9,7 +9,7 @@
 
     @if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
     {
-        <h4> Champions Pricing Details &emsp; (Total Items - @managePricing_IndexViewModel.TotalItems and Total Buy Value - Rs.@managePricing_IndexViewModel.TotalBuyValue)</h4>
+    <h4> Champions Pricing Details &emsp; Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
     }
     else
     {
@@ -39,6 +39,16 @@
         Html.RenderPartial("ChampionsPricingGrid", managePricing_IndexViewModel);
     }
 </div><!--/container-->
+@if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
+{
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-header">
+                <h4 style="color:white;">Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
+            </div>
+        </div>
+    </div>
+}
 <div id="temp_element_error" style="display:none;">
     <div class="alert alert-danger">
         <button type="button" class="close" data-dismiss="alert">×</button>

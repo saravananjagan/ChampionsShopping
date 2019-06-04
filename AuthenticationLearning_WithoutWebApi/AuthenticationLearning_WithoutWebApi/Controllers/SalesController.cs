@@ -30,9 +30,18 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     managePricing_IndexViewModel = new ManagePricing_IndexViewModel();
                     DataSet PricingDataSet = new DataSet();
                     DataTable PricingDataTable = new DataTable();
+                    DataSet CumulativeCartDataSet = new DataSet();
+                    DataTable CumulativeCartDataTable = new DataTable();
                     string UserId = User.Identity.GetUserId();
                     PricingDataSet = PricingDetailsProxy.FetchPricingDetails(UserId);
                     PricingDataTable = PricingDataSet.Tables[0];
+                    CumulativeCartDataSet = PricingDetailsProxy.FetchCumulativeCartDetails(UserId);
+                    CumulativeCartDataTable = CumulativeCartDataSet.Tables[0];
+                    foreach (DataRow row in CumulativeCartDataTable.Rows)
+                    {
+                        managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
+                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                    }
                     PricingDataTable = DataTablePhotoMapping(PricingDataTable);
                     if (PricingDataTable != null)
                     {
@@ -80,6 +89,19 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     string UserId = User.Identity.GetUserId();
                     PricingDataSet = PricingDetailsProxy.FetchPricingDetails(UserId);
                     PricingDataTable = PricingDataSet.Tables[0];
+
+                    #region CumulativeCartData
+                    DataSet CumulativeCartDataSet = new DataSet();
+                    DataTable CumulativeCartDataTable = new DataTable();
+                    CumulativeCartDataSet = PricingDetailsProxy.FetchCumulativeCartDetails(UserId);
+                    CumulativeCartDataTable = CumulativeCartDataSet.Tables[0];
+                    foreach (DataRow row in CumulativeCartDataTable.Rows)
+                    {
+                        managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
+                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                    }
+                    #endregion
+
                     PricingDataTable = DataTablePhotoMapping(PricingDataTable);
                     if (PricingDataTable != null)
                     {
@@ -136,6 +158,19 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     string UserId = User.Identity.GetUserId();
                     PricingDataSet = PricingDetailsProxy.FetchPricingDetails(UserId);
                     PricingDataTable = PricingDataSet.Tables[0];
+
+                    #region CumulativeCartData
+                    DataSet CumulativeCartDataSet = new DataSet();
+                    DataTable CumulativeCartDataTable = new DataTable();
+                    CumulativeCartDataSet = PricingDetailsProxy.FetchCumulativeCartDetails(UserId);
+                    CumulativeCartDataTable = CumulativeCartDataSet.Tables[0];
+                    foreach (DataRow row in CumulativeCartDataTable.Rows)
+                    {
+                        managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
+                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                    }
+                    #endregion
+
                     PricingDataTable = DataTablePhotoMapping(PricingDataTable);
                     if (PricingDataTable != null)
                     {
