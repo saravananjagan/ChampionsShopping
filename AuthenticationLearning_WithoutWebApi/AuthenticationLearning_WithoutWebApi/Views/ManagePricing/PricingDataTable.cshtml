@@ -4,11 +4,54 @@
     ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
 }
 <table class="table table-striped datatable">
-    <thead><tr><th>Product Id</th><th>Product Name</th><th>Buy Price</th><th>Sell Price</th><th>Profit</th><th>MRP</th><th>Actions</th></tr></thead>
+    <thead><tr><th>Photo</th><th>Product Id</th><th>Product Name</th><th>Buy Price</th><th>Sell Price</th><th>Profit</th><th>MRP</th><th>Actions</th></tr></thead>
     <tbody>
         @foreach (DataRow row in managePricing_IndexViewModel.PricingDataTable.Rows)
         {
             <tr>
+                <td>
+                    @if (managePricing_IndexViewModel.ProductPhotoMappingDic.ContainsKey(row["ProductPricingId"].ToString()))
+                    {
+                        int count = 1;
+                        <div id="myCarousel_@row["ProductPricingId"].ToString()" class="carousel slide">
+                            <!-- main slider carousel items -->
+                            <div class="carousel-inner">
+
+                                @foreach (string Photo in managePricing_IndexViewModel.ProductPhotoMappingDic[row["ProductPricingId"].ToString()].ToList())
+                                {
+                                    if (count == 1)
+                                    {
+                                        <div class="active item" data-slide-number="@count">
+                                            <img src="data:image/png;base64, @Photo" class="img-responsive">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="item" data-slide-number="@count">
+                                            <img src="data:image/png;base64, @Photo" class="img-responsive">
+                                        </div>
+                                    }
+                                    count++;
+                                }
+                            </div>
+                            <a class="carousel-control left" data-target="#myCarousel_@row["ProductPricingId"].ToString()" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                            <a class="carousel-control right" data-target="#myCarousel_@row["ProductPricingId"].ToString()" data-slide="next"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="myCarousel" class="carousel slide">
+                            <!-- main slider carousel items -->
+                            <div class="carousel-inner">
+                                <div class="active item" data-slide-number="0">
+                                    <img src="http://placehold.it/1200x480&amp;text=one" class="img-responsive">
+                                </div>
+                            </div>
+                            <a class="carousel-control left" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                            <a class="carousel-control right" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                        </div>
+                    }
+                </td>
                 <td>@row["ProductId"].ToString()</td>
                 <td>@row["ProductName"].ToString()</td>
                 <td>@row["BuyPrice"].ToString()</td>
@@ -20,6 +63,26 @@
         }
     </tbody>
 </table>
+<div id="UpdatePricingPhotoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="myModalLabel">Update Photo</h3>
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    
+                    <input type="hidden" id="ProductPricingId_Image" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel/Close</button>
+                <button class="btn btn-primary" onclick="UpdatePricingDetails()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         $(".datatable").DataTable();
