@@ -13,11 +13,12 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
     {
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+			string controllerName = GetControllerNameByItsRole();
+			if (User.Identity.IsAuthenticated)
             {
                 if (!isAdminUser())
                 {
-                    return RedirectToAction("Index", "Sales");
+                    return RedirectToAction("Index", controllerName);
                 }
                 else
                 {
@@ -43,7 +44,30 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
 
             return View();
         }
-        private bool isAdminUser()
+
+		private string GetControllerNameByItsRole()
+		{
+			if (User.Identity.IsAuthenticated)
+			{
+				var user = User.Identity;
+				ApplicationDbContext context = new ApplicationDbContext();
+				var UserManager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(context));
+				var s = UserManager.GetRoles(user.GetUserId());
+				if (s[0].ToString() == "Champion")
+				{
+					return "Sales";
+				}
+				else if (s[0].ToString() == "Customer")
+				{
+					return "Customer";
+				}
+				else
+					return "Home";
+			}
+			return "Home";
+		}
+
+		private bool isAdminUser()
         {
             if (User.Identity.IsAuthenticated)
             {

@@ -1,0 +1,197 @@
+﻿@using System.Data;
+@using AuthenticationLearning_WithoutWebApi.Models;
+@{
+    ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
+}
+
+<div class="container">
+
+    @if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
+    {
+        <h4> Customer Pricing Details &emsp; Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
+    }
+    else
+    {
+        <h4>Customer Pricing Details</h4>
+    }
+    <hr />
+</div>
+<div class="container" id="CustomerCallBackContainer">
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.ErrorMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Please correct the following errors:</strong> <br />
+            <div id="ErrorMessage">@managePricing_IndexViewModel.ErrorMessage</div>
+        </div>
+    }
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.SuccessMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.SuccessMessage))
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong id="SuccessMessage">@managePricing_IndexViewModel.SuccessMessage</strong>
+        </div>
+    }
+</div>
+
+<div class="row">
+    @foreach (DataRow row in managePricing_IndexViewModel.PricingDataTable.Rows)
+    {
+        float profit = float.Parse(row["SellPrice"].ToString()) - float.Parse(row["BuyPrice"].ToString());
+
+        <div class="col-lg-3 col-sm-4 col-xs-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    @row["ProductName"].ToString()
+                </div>
+                <div class="panel-body">
+                    <center>
+                        @*<img src="http://placehold.it/150X150" class="img-responsive" />*@
+
+                        @if (managePricing_IndexViewModel.ProductPhotoMappingDic.ContainsKey(row["ProductPricingId"].ToString()))
+                        {
+                            int count = 1;
+                            <div id="myCarousel_@row["ProductPricingId"].ToString()" class="carousel slide">
+                                <!-- main slider carousel items -->
+                                <div class="carousel-inner">
+
+                                    @foreach (string Photo in managePricing_IndexViewModel.ProductPhotoMappingDic[row["ProductPricingId"].ToString()].ToList())
+                                    {
+                                        if (count == 1)
+                                        {
+                                            <div class="active item" data-slide-number="@count">
+                                                <img src="data:image/png;base64, @Photo" class="img-responsive">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="item" data-slide-number="@count">
+                                                <img src="data:image/png;base64, @Photo" class="img-responsive">
+                                            </div>
+                                        }
+                                        count++;
+                                    }
+                                </div>
+                                <a class="carousel-control left" data-target="#myCarousel_@row["ProductPricingId"].ToString()" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                                <a class="carousel-control right" data-target="#myCarousel_@row["ProductPricingId"].ToString()" data-slide="next"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="myCarousel" class="carousel slide">
+                                <!-- main slider carousel items -->
+                                <div class="carousel-inner">
+                                    <div class="active item" data-slide-number="0">
+                                        <img src="http://placehold.it/1200x480&amp;text=one" class="img-responsive">
+                                    </div>
+                                </div>
+                                <a class="carousel-control left" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                                <a class="carousel-control right" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                            </div>
+                        }
+
+                    </center>
+                    <br />
+                    <p class="text-center lead">@row["ProductName"].ToString() - @row["ProductId"].ToString()</p>
+                    <h5 class="text-center">Price: Rs.@row["SellPrice"].ToString()</h5>
+                    <h5 class="text-center"><del>MRP: Rs.@row["MRP"].ToString()</del></h5>
+                </div>
+                <div class="panel-footer">
+
+                    @*<center><button class="btn btn-success" onclick="AddCartItem('@row["ProductPricingId"].ToString()','@row["ProductName"].ToString()','@row["ProductId"].ToString()','@row["BuyPrice"].ToString()','@row["SellPrice"].ToString()','@profit')">Add to Cart</button></center>*@
+                    <div class="row">
+                        @if (!string.IsNullOrEmpty(@row["IsCartItem"].ToString()) && @row["IsCartItem"].ToString() == "1")
+                        {
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus" data-field="" onclick="DecreaseCustomerCartQty('@row["ProductPricingId"].ToString()')">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </button>
+                                    </span>
+                                    <input type="text" id="quantity_@row["ProductPricingId"].ToString()" name="quantity" class="form-control input-number" value="@row["CartItemQuantity"].ToString()" min="1">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="" onclick="IncreaseCustomerCartQty('@row["ProductPricingId"].ToString()')">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <center>
+                                <button class="btn btn-success" onclick="UpdateCustomerCartItem('@row["ProductPricingId"].ToString()')">Add</button>
+                                <input type="text" style="display:none;" id="quantity_@row["ProductPricingId"].ToString()" name="quantity" class="form-control input-number" value="1" min="1">
+                            </center>
+                        }
+                        @*<div class="col-md-4">
+                                <button class="btn btn-primary" style="border-radius:50%;" id="UpdateCart_@row["ProductPricingId"].ToString()" onclick="UpdateCartItem('@row["ProductPricingId"].ToString()')">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </button>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div><!--/row-->
+
+@if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
+{
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-header">
+                <h4 style="color:white;">Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
+            </div>
+        </div>
+    </div>
+}
+
+<div id="AddToCartModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="myModalLabel">Add To Cart</h3>
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <center><img src="http://placehold.it/150X150" class="img-circle img-responsive" /></center>
+                    <p class="text-center lead" id="Cart_ProductName"></p>
+                    <h5 class="text-center" id="Cart_BuyPrice"></h5>
+                    <h5 class="text-center" id="Cart_SellPrice"></h5>
+                    <h4 class="text-center" id="Cart_Profit"></h4>
+                    <div class="row">
+                        <div class="col-md-4"><button class="btn btn-default round-button" id="qty-reduce" style="float:right;border-radius:50%;"><i class="fa fa-minus"></i></button></div>
+                        <div class="col-md-4"><center><input type="number" class="form-control input-sm" id="CartItemQuantity" placeholder="Quantity"></center></div>
+                        <div class="col-md-4"><button class="btn btn-default round-button" id="qty-add" style="float:left;border-radius:50%"><i class="fa fa-plus"></i></button></div>
+                    </div>
+
+                    <input type="hidden" id="Cart_ProductPricingId" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel/Close</button>
+                <button class="btn btn-primary" onclick="UpdateCustomerCartItem()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var ErrorMessage = "@managePricing_IndexViewModel.ErrorMessage";
+        var SuccessMessage="@managePricing_IndexViewModel.SuccessMessage";
+        if (ErrorMessage != null && ErrorMessage != "" && ErrorMessage != undefined) {
+            $("#ErrorMessage_js").html(ErrorMessage);
+            var ErrorAlert = $("#temp_element_error").html();
+            $("#ChampionsCallBackContainer").prepend(ErrorAlert);
+        }
+        if (SuccessMessage != null && SuccessMessage != "" && SuccessMessage != undefined) {
+            $("#SuccessMessage_js").html(SuccessMessage);
+            var SuccessAlert = $("#temp_element_success").html();
+            $("#ChampionsCallBackContainer").prepend(SuccessAlert);
+        }
+    });
+</script>
+<script src="~/Scripts/CartDetails.js"></script>

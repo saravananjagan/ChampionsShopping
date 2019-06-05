@@ -197,6 +197,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagePricingController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -285,6 +286,8 @@
     <Content Include="Views\ChampionCheckout\Index.cshtml" />
     <Content Include="Views\ChampionCheckout\CartView.cshtml" />
     <Content Include="Zip\14.zip" />
+    <Content Include="Views\Customer\CustomerPricingGrid.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
