@@ -671,6 +671,8 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
         {
             Dictionary<string, List<string>> PhotoMappingDic = new Dictionary<string, List<string>>();
             List<string> Photos = new List<string>();
+            List<string> PhotoMappingIds = new List<string>();
+            Dictionary<string, List<string>> PhotoMappingIdDic = new Dictionary<string, List<string>>();
             foreach (DataRow datarow in PricingDataTable.Rows)
             {
                 if (!PhotoMappingDic.ContainsKey(datarow["ProductPricingId"].ToString()) && !String.IsNullOrEmpty(datarow["Photo"].ToString()))
@@ -678,13 +680,18 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     Photos = new List<string>();
                     Photos.Add(datarow["Photo"].ToString());
                     PhotoMappingDic.Add(datarow["ProductPricingId"].ToString(), Photos);
+                    PhotoMappingIds = new List<string>();
+                    PhotoMappingIds.Add(datarow["ProductPhotoMappingId"].ToString());
+                    PhotoMappingIdDic.Add(datarow["ProductPricingId"].ToString(), PhotoMappingIds);
                 }
                 else if (!String.IsNullOrEmpty(datarow["Photo"].ToString()))
                 {
                     PhotoMappingDic[datarow["ProductPricingId"].ToString()].Add(datarow["Photo"].ToString());
+                    PhotoMappingIdDic[datarow["ProductPricingId"].ToString()].Add(datarow["ProductPhotoMappingId"].ToString());
                 }
             }
             managePricing_IndexViewModel.ProductPhotoMappingDic = PhotoMappingDic;
+            managePricing_IndexViewModel.PhotoMappingIdDic = PhotoMappingIdDic;
             PricingDataTable.Columns.Remove("Photo");
             PricingDataTable.Columns.Remove("Ordinal");
             PricingDataTable = RemoveDuplicateRows(PricingDataTable, "ProductPricingId");

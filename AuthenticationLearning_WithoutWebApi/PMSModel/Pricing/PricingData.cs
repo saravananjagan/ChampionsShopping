@@ -16,4 +16,13 @@ namespace PMSModel.Pricing
         public float Profit { get; set; }
         public float MRP { get; set; }
     }
+
+    public class PricingPhotoData
+    {
+        public string ProductPhotoMappingId { get; set; }
+        public string ProductPricingId { get; set; }
+        public string ProductId { get; set; }
+        public string Photo { get; set; }
+        public int Ordinal { get; set; }
+    }
 }

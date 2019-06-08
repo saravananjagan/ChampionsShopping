@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PMSDAL.Pricing
 {
-    public class PricingDetailsDAL: IPricingDetailsDAL
+    public class PricingDetailsDAL : IPricingDetailsDAL
     {
         private string ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         public bool InsertBulkPricingDetails(string ImportValues)
@@ -34,7 +34,7 @@ namespace PMSDAL.Pricing
             DataSet dataSet = new DataSet();
             try
             {
-                using (SqlConnection connection=new SqlConnection(ConnectionString))
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     SqlCommand sqlCommand = new SqlCommand("dbo.USP_FetchProductPricingDetails", connection);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -86,7 +86,7 @@ namespace PMSDAL.Pricing
                     SqlCommand sqlCommand = new SqlCommand("dbo.USP_FetchProductPricingDetails", connection);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.Add("@UserId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UserId);
-                    sqlCommand.Parameters.Add("@CumulativeCartInfo", SqlDbType.Bit).Value = 1;                    
+                    sqlCommand.Parameters.Add("@CumulativeCartInfo", SqlDbType.Bit).Value = 1;
                     connection.Open();
                     SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
                     dataAdapter.Fill(dataSet);
@@ -101,7 +101,7 @@ namespace PMSDAL.Pricing
             }
         }
 
-        public bool CUDPricingDetails(PricingData pricingData,string QuerySelector)
+        public bool CUDPricingDetails(PricingData pricingData, string QuerySelector)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -133,6 +133,44 @@ namespace PMSDAL.Pricing
                 {
                     sqlCommand.Parameters.Add("@MRP", SqlDbType.Float).Value = pricingData.MRP;
                 }
+                sqlCommand.Parameters.Add("@Status", SqlDbType.Bit).Value = 1;
+                connection.Open();
+                sqlCommand.CommandTimeout = 120;
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+            }
+            return true;
+        }
+
+        public bool CUDPricingPhotoDetails(PricingPhotoData pricingPhotoData, string QuerySelector)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand("dbo.USP_CUDPricingDetails", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add("@QuerySelector", SqlDbType.VarChar).Value = QuerySelector;
+                sqlCommand.Parameters.Add("@ProductPricingId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(pricingPhotoData.ProductPricingId);
+                if (!string.IsNullOrEmpty(pricingPhotoData.ProductPhotoMappingId))
+                {
+                    sqlCommand.Parameters.Add("@ProductPhotoMappingId", SqlDbType.VarChar).Value = pricingPhotoData.ProductPhotoMappingId;
+                }
+                if (!string.IsNullOrEmpty(pricingPhotoData.ProductPricingId))
+                {
+                    sqlCommand.Parameters.Add("@ProductPricingId", SqlDbType.VarChar).Value = pricingPhotoData.ProductPricingId;
+                }
+                if (!string.IsNullOrEmpty(pricingPhotoData.ProductId))
+                {
+                    sqlCommand.Parameters.Add("@ProductId", SqlDbType.VarChar).Value = pricingPhotoData.ProductId;
+                }
+                if (!string.IsNullOrEmpty(pricingPhotoData.Photo.ToString()))
+                {
+                    sqlCommand.Parameters.Add("@Photo", SqlDbType.VarChar).Value = pricingPhotoData.Photo;
+                }
+                if (!string.IsNullOrEmpty(pricingPhotoData.Ordinal.ToString()))
+                {
+                    sqlCommand.Parameters.Add("@Ordinal", SqlDbType.VarChar).Value = pricingPhotoData.Ordinal.ToString();
+                }
+                
                 sqlCommand.Parameters.Add("@Status", SqlDbType.Bit).Value = 1;
                 connection.Open();
                 sqlCommand.CommandTimeout = 120;

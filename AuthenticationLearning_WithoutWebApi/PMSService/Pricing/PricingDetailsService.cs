@@ -85,6 +85,21 @@ namespace PMSService.Pricing
                 return false;
             }            
         }
+
+        public bool CUDPricingPhotoDetails(PricingPhotoData pricingPhotoData, string QuerySelector)
+        {
+            try
+            {
+                IPricingDetailsDAL pricingDetailsDAL = new PricingDetailsDAL();
+                pricingDetailsDAL.CUDPricingPhotoDetails(pricingPhotoData, QuerySelector);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public DataSet FetchUserPricingDetails(string UserId)
         {
             DataSet dataSet = new DataSet();

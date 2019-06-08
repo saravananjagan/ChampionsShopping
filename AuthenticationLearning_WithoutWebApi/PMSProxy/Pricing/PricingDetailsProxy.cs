@@ -37,6 +37,11 @@ namespace PMSProxy.Pricing
             IPricingDetailsService pricingDetailsService = new PricingDetailsService();
             return pricingDetailsService.CUDPricingDetails(pricingData,QuerySelector);
         }
+        public static bool CUDPricingPhotoDetails(PricingPhotoData pricingPhotoData, string QuerySelector)
+        {
+            IPricingDetailsService pricingDetailsService = new PricingDetailsService();
+            return pricingDetailsService.CUDPricingPhotoDetails(pricingPhotoData, QuerySelector);
+        }
         public static DataSet FetchUserPricingDetails(string UserId)
         {
             IPricingDetailsService pricingDetailsService = new PricingDetailsService();
