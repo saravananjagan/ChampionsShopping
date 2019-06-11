@@ -146,17 +146,13 @@ namespace PMSDAL.Pricing
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                SqlCommand sqlCommand = new SqlCommand("dbo.USP_CUDPricingDetails", connection);
+                SqlCommand sqlCommand = new SqlCommand("dbo.USP_CUDPricingPhotoDetails", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add("@QuerySelector", SqlDbType.VarChar).Value = QuerySelector;
                 sqlCommand.Parameters.Add("@ProductPricingId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(pricingPhotoData.ProductPricingId);
                 if (!string.IsNullOrEmpty(pricingPhotoData.ProductPhotoMappingId))
                 {
                     sqlCommand.Parameters.Add("@ProductPhotoMappingId", SqlDbType.VarChar).Value = pricingPhotoData.ProductPhotoMappingId;
-                }
-                if (!string.IsNullOrEmpty(pricingPhotoData.ProductPricingId))
-                {
-                    sqlCommand.Parameters.Add("@ProductPricingId", SqlDbType.VarChar).Value = pricingPhotoData.ProductPricingId;
                 }
                 if (!string.IsNullOrEmpty(pricingPhotoData.ProductId))
                 {
@@ -251,5 +247,6 @@ namespace PMSDAL.Pricing
 				pricingData = null;
 			}
 		}
+
 	}
 }

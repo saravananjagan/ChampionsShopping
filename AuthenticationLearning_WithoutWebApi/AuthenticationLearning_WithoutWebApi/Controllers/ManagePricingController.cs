@@ -330,6 +330,49 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
         }
 
         [HttpPost]
+        public ActionResult CUProductImage(HttpPostedFileBase ImageFile, string ProductId, string ProductPricingId, string Ordinal, string PhotoMappingId)
+        {
+            string filename = ImageFile.FileName;
+            string ImagePath= Server.MapPath("~/ProductImages/");
+            ImagePath = ImagePath + filename;
+            try
+            {
+                if (isAdminUser())
+                {
+                    PricingPhotoData pricingPhotoData = new PricingPhotoData();
+                    ImageFile.SaveAs(ImagePath);
+                    string Base64 = ProcessFile(ImagePath);
+                    int OrdinalInt;
+                    int.TryParse(Ordinal, out OrdinalInt);
+                    pricingPhotoData.Ordinal = OrdinalInt;
+                    pricingPhotoData.Photo = Base64;
+                    pricingPhotoData.ProductId = ProductId;
+                    pricingPhotoData.ProductPricingId = ProductPricingId;
+                    if (String.IsNullOrEmpty(PhotoMappingId))
+                    {
+                        pricingPhotoData.ProductPhotoMappingId = Guid.NewGuid().ToString();
+                        PricingDetailsProxy.CUDPricingPhotoDetails(pricingPhotoData, "Insert");
+                    }
+                    else
+                    {
+                        pricingPhotoData.ProductPhotoMappingId = PhotoMappingId;
+                        PricingDetailsProxy.CUDPricingPhotoDetails(pricingPhotoData, "Update");
+                    }
+                    System.IO.File.Delete(ImagePath);
+                    managePricing_IndexViewModel.SuccessMessage = UploadConstants.UploadSuccessMessage;
+                    return RedirectToAction("Index", "ManagePricing", managePricing_IndexViewModel);
+                }
+            }
+            catch(Exception e)
+            {
+                managePricing_IndexViewModel.ErrorMessage = CUDConstants.InsertError;
+                System.IO.File.Delete(ImagePath);
+                return RedirectToAction("Index", "ManagePricing", managePricing_IndexViewModel);
+            }
+            return View();
+        }
+
+        [HttpPost]
         public ActionResult UploadProductImages(HttpPostedFileBase ImageZip)
         {
 
@@ -671,8 +714,7 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
         {
             Dictionary<string, List<string>> PhotoMappingDic = new Dictionary<string, List<string>>();
             List<string> Photos = new List<string>();
-            List<string> PhotoMappingIds = new List<string>();
-            Dictionary<string, List<string>> PhotoMappingIdDic = new Dictionary<string, List<string>>();
+            Dictionary<string, string> PhotoMappingIdDic = new Dictionary<string, string>();
             foreach (DataRow datarow in PricingDataTable.Rows)
             {
                 if (!PhotoMappingDic.ContainsKey(datarow["ProductPricingId"].ToString()) && !String.IsNullOrEmpty(datarow["Photo"].ToString()))
@@ -680,14 +722,12 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     Photos = new List<string>();
                     Photos.Add(datarow["Photo"].ToString());
                     PhotoMappingDic.Add(datarow["ProductPricingId"].ToString(), Photos);
-                    PhotoMappingIds = new List<string>();
-                    PhotoMappingIds.Add(datarow["ProductPhotoMappingId"].ToString());
-                    PhotoMappingIdDic.Add(datarow["ProductPricingId"].ToString(), PhotoMappingIds);
+                    PhotoMappingIdDic.Add(datarow["Photo"].ToString(), datarow["ProductPhotoMappingId"].ToString());
                 }
                 else if (!String.IsNullOrEmpty(datarow["Photo"].ToString()))
                 {
                     PhotoMappingDic[datarow["ProductPricingId"].ToString()].Add(datarow["Photo"].ToString());
-                    PhotoMappingIdDic[datarow["ProductPricingId"].ToString()].Add(datarow["ProductPhotoMappingId"].ToString());
+                    PhotoMappingIdDic.Add(datarow["Photo"].ToString(), datarow["ProductPhotoMappingId"].ToString());
                 }
             }
             managePricing_IndexViewModel.ProductPhotoMappingDic = PhotoMappingDic;

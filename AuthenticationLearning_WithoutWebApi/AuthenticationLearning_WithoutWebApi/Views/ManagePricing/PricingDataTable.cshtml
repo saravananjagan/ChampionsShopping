@@ -22,7 +22,7 @@
     }*/
 
     .text {
-        color: white;
+        color: maroon !important;
         font-size: 20px;
         position: absolute;
         top: 50%;
@@ -62,7 +62,8 @@
                                     }
                                     <div class="overlay" id="@row["ProductPricingId"].ToString()-@count">
                                         <div class="text">
-
+                                            <a onclick="CUPhotoDetailsModal('','@row["ProductPricingId"].ToString()','@count','@row["ProductId"]')"><i class="fa fa-plus" style="color: green !important;"></i></a>
+                                            <a onclick="CUPhotoDetailsModal('@managePricing_IndexViewModel.PhotoMappingIdDic[Photo].ToString()','@row["ProductPricingId"].ToString()','@count','@row["ProductId"]')"><i class="fa fa-pencil" style="color: orange !important;"></i></a>
                                         </div>
                                     </div>
                                     count++;
@@ -100,23 +101,37 @@
         }
     </tbody>
 </table>
-<div id="UpdatePricingPhotoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="PricingPhotoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="myModalLabel">Update Photo</h3>
                 @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
             </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    
-                    <input type="hidden" id="ProductPricingId_Image" />
+            @using (Html.BeginForm("CUProductImage", "ManagePricing", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+            {
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-2 control-label">Image:</div>
+                            <div class="col-md-10">
+                                <input type="file" id="ImageFile" name="ImageFile" class="" />
+                            </div>
+                        </div>
+                        <h3 id="ProductId_Image"></h3>
+                        @*<center><img src="http://placehold.it/1200x480&amp;text=one" class="img-responsive" id="ProductImage_Image"></center>*@<br />
+                        <center>Ordinal: <input type="number" class="form-control" id="Ordinal_Image" name="Ordinal"/></center>
+                        <input type="hidden" id="ProductId_ImageVal" name="ProductId" />
+                        <input type="hidden" id="ProductPhotoMappingId_Image" name="ProductPhotoMappingId"/>
+                        <input type="hidden" id="QuerySelector" name="QuerySelector"/>
+                        <input type="hidden" id="ProductPricingId_Image" name="ProductPricingId"/>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel/Close</button>
-                <button class="btn btn-primary" onclick="UpdatePricingDetails()">Save changes</button>
-            </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel/Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -145,4 +160,24 @@
     function ImageOverlayOut(OverlayId) {
         $("#" + OverlayId).attr('style', 'bottom:100%; height:0;');
     }
+    function CUPhotoDetailsModal(ProductPhotoMappingId, ProductPricingId, Ordinal, ProductId) {
+        if (ProductPhotoMappingId == null || ProductPhotoMappingId == "") {
+            ///add
+            $("#ProductId_ImageVal").val(ProductId);
+            $("#Ordinal_Image").val(Ordinal);
+            $("#ProductPricingId_Image").val(ProductPricingId);
+            $("#PricingPhotoModal").modal();
+
+        }
+        else
+        {
+            ///edit
+            $("#ProductPhotoMappingId_Image").val(ProductPhotoMappingId);
+            $("#ProductId_ImageVal").val(ProductId);
+            $("#Ordinal_Image").val(Ordinal);
+            $("#ProductPricingId_Image").val(ProductPricingId);
+            $("#PricingPhotoModal").modal();
+        }
+    }
+
 </script>
