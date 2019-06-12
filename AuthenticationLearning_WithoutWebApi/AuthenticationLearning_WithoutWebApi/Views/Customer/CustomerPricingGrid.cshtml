@@ -178,20 +178,4 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        var ErrorMessage = "@managePricing_IndexViewModel.ErrorMessage";
-        var SuccessMessage="@managePricing_IndexViewModel.SuccessMessage";
-        if (ErrorMessage != null && ErrorMessage != "" && ErrorMessage != undefined) {
-            $("#ErrorMessage_js").html(ErrorMessage);
-            var ErrorAlert = $("#temp_element_error").html();
-            $("#ChampionsCallBackContainer").prepend(ErrorAlert);
-        }
-        if (SuccessMessage != null && SuccessMessage != "" && SuccessMessage != undefined) {
-            $("#SuccessMessage_js").html(SuccessMessage);
-            var SuccessAlert = $("#temp_element_success").html();
-            $("#ChampionsCallBackContainer").prepend(SuccessAlert);
-        }
-    });
-</script>
 <script src="~/Scripts/CartDetails.js"></script>

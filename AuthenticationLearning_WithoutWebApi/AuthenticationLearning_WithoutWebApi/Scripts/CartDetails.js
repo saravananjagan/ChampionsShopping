@@ -26,7 +26,7 @@
         if (quantity > 1) {
             $('#quantity').val(quantity - 1);
         }
-    });
+    }); 
 });
 
 function IncreaseCartQty(ProductPricingId) {
@@ -148,7 +148,7 @@ function UpdateCustomerCartItem(ProductPricingId) {
         data: { ProductPricingId: ProductPricingId, CartItemQuantity: CartItemQuantity },
         success: function (data) {
             $("#CustomerPricingGrid").html(data);
-            GetCartCount();
+            GetCustomerCartCount();
         },
         error: function (e) {
             alert("Something wrong. Please check the internet connection!!!");
@@ -163,7 +163,7 @@ function DeleteCustomerCartItem(ProductPricingId) {
         data: { ProductPricingId: ProductPricingId },
         success: function (data) {
             $("#CustomerPricingGrid").html(data);
-            GetCartCount();
+            GetCustomerCartCount();
         },
         error: function (e) {
             alert("Something wrong. Please check the internet connection!!!");

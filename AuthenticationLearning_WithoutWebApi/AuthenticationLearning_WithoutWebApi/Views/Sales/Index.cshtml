@@ -3,52 +3,12 @@
     ViewBag.Title = "Index";
     ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
 }
-
 <br />
-<div class="container">
-
-    @if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
-    {
-    <h4> Champions Pricing Details &emsp; Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
-    }
-    else
-    {
-        <h4>Champions Pricing Details</h4>
-    }
-    <hr />
-</div>
-<div class="container" id="ChampionsCallBackContainer">
-    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.ErrorMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.ErrorMessage))
-    {
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>Please correct the following errors:</strong> <br />
-            <div id="ErrorMessage">@managePricing_IndexViewModel.ErrorMessage</div>
-        </div>
-    }
-    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.SuccessMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.SuccessMessage))
-    {
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong id="SuccessMessage">@managePricing_IndexViewModel.SuccessMessage</strong>
-        </div>
-    }
-</div>
 <div class="container" id="ChampionsPricingGrid">
     @{
-        Html.RenderPartial("ChampionsPricingGrid", managePricing_IndexViewModel);
+         Html.RenderPartial("ChampionsPricingGrid", managePricing_IndexViewModel);
     }
 </div><!--/container-->
-@if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
-{
-    <div class="navbar navbar-inverse navbar-fixed-bottom">
-        <div class="container">
-            <div class="navbar-header">
-                <h4 style="color:white;">Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
-            </div>
-        </div>
-    </div>
-}
 <div id="temp_element_error" style="display:none;">
     <div class="alert alert-danger">
         <button type="button" class="close" data-dismiss="alert">×</button>

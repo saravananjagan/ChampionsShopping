@@ -214,7 +214,7 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                 ApplicationDbContext context = new ApplicationDbContext();
                 var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 var s = UserManager.GetRoles(user.GetUserId());
-                if (s[0].ToString() == "Champion")
+                if (s[0].ToString() == "Champion" || (!string.IsNullOrEmpty(s[0].ToString()) && s[0].ToString().Equals("Customer")))
                 {
                     return true;
                 }

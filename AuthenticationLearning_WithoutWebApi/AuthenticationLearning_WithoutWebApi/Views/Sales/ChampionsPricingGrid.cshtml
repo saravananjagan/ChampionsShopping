@@ -3,6 +3,36 @@
 @{
     ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
 }
+
+<div class="container">
+    @if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
+    {
+        <h4> Champions Pricing Details &emsp; Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
+    }
+    else
+    {
+        <h4>Champions Pricing Details</h4>
+    }
+    <hr />
+</div>
+<div class="container" id="ChampionsCallBackContainer">
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.ErrorMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Please correct the following errors:</strong> <br />
+            <div id="ErrorMessage">@managePricing_IndexViewModel.ErrorMessage</div>
+        </div>
+    }
+    @if (managePricing_IndexViewModel != null && managePricing_IndexViewModel.SuccessMessage != null && !String.IsNullOrEmpty(managePricing_IndexViewModel.SuccessMessage))
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong id="SuccessMessage">@managePricing_IndexViewModel.SuccessMessage</strong>
+        </div>
+    }
+</div>
+
 <div class="row">
     @foreach (DataRow row in managePricing_IndexViewModel.PricingDataTable.Rows)
     {
@@ -107,6 +137,17 @@
     }
 </div><!--/row-->
 
+@if (!string.IsNullOrEmpty(managePricing_IndexViewModel.TotalItems) && !(string.IsNullOrEmpty(managePricing_IndexViewModel.TotalBuyValue)))
+{
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-header">
+                <h4 style="color:white;">Items (@managePricing_IndexViewModel.TotalItems) -Rs.@managePricing_IndexViewModel.TotalBuyValue</h4>
+            </div>
+        </div>
+    </div>
+}
+
 <div id="AddToCartModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -137,20 +178,4 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        var ErrorMessage = "@managePricing_IndexViewModel.ErrorMessage";
-        var SuccessMessage="@managePricing_IndexViewModel.SuccessMessage";
-        if (ErrorMessage != null && ErrorMessage != "" && ErrorMessage != undefined) {
-            $("#ErrorMessage_js").html(ErrorMessage);
-            var ErrorAlert = $("#temp_element_error").html();
-            $("#ChampionsCallBackContainer").prepend(ErrorAlert);
-        }
-        if (SuccessMessage != null && SuccessMessage != "" && SuccessMessage != undefined) {
-            $("#SuccessMessage_js").html(SuccessMessage);
-            var SuccessAlert = $("#temp_element_success").html();
-            $("#ChampionsCallBackContainer").prepend(SuccessAlert);
-        }
-    });
-</script>
 <script src="~/Scripts/CartDetails.js"></script>
