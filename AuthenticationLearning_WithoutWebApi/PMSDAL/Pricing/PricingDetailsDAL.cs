@@ -149,7 +149,10 @@ namespace PMSDAL.Pricing
                 SqlCommand sqlCommand = new SqlCommand("dbo.USP_CUDPricingPhotoDetails", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add("@QuerySelector", SqlDbType.VarChar).Value = QuerySelector;
-                sqlCommand.Parameters.Add("@ProductPricingId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(pricingPhotoData.ProductPricingId);
+                if (!string.IsNullOrEmpty(pricingPhotoData.ProductPricingId))
+                {
+                    sqlCommand.Parameters.Add("@ProductPricingId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(pricingPhotoData.ProductPricingId);
+                }
                 if (!string.IsNullOrEmpty(pricingPhotoData.ProductPhotoMappingId))
                 {
                     sqlCommand.Parameters.Add("@ProductPhotoMappingId", SqlDbType.VarChar).Value = pricingPhotoData.ProductPhotoMappingId;
@@ -158,11 +161,11 @@ namespace PMSDAL.Pricing
                 {
                     sqlCommand.Parameters.Add("@ProductId", SqlDbType.VarChar).Value = pricingPhotoData.ProductId;
                 }
-                if (!string.IsNullOrEmpty(pricingPhotoData.Photo.ToString()))
+                if (!string.IsNullOrEmpty(pricingPhotoData.Photo))
                 {
                     sqlCommand.Parameters.Add("@Photo", SqlDbType.VarChar).Value = pricingPhotoData.Photo;
                 }
-                if (!string.IsNullOrEmpty(pricingPhotoData.Ordinal.ToString()))
+                if (pricingPhotoData.Ordinal!=0)
                 {
                     sqlCommand.Parameters.Add("@Ordinal", SqlDbType.VarChar).Value = pricingPhotoData.Ordinal.ToString();
                 }

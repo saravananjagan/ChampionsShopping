@@ -38,11 +38,12 @@
     <tbody>
         @foreach (DataRow row in managePricing_IndexViewModel.PricingDataTable.Rows)
         {
+            int count = 0;
             <tr>
-                <td>
+                <td>                        
                     @if (managePricing_IndexViewModel.ProductPhotoMappingDic.ContainsKey(row["ProductPricingId"].ToString()))
                     {
-                        int count = 1;
+                         count = 1;
                         <div id="myCarousel_@row["ProductPricingId"].ToString()" class="carousel slide">
                             <!-- main slider carousel items -->
                             <div class="carousel-inner">
@@ -63,7 +64,8 @@
                                     <div class="overlay" id="@row["ProductPricingId"].ToString()-@count">
                                         <div class="text">
                                             <a onclick="CUPhotoDetailsModal('','@row["ProductPricingId"].ToString()','@count','@row["ProductId"]')"><i class="fa fa-plus" style="color: green !important;"></i></a>
-                                            <a onclick="CUPhotoDetailsModal('@managePricing_IndexViewModel.PhotoMappingIdDic[Photo].ToString()','@row["ProductPricingId"].ToString()','@count','@row["ProductId"]')"><i class="fa fa-pencil" style="color: orange !important;"></i></a>
+                                            <a onclick="CUPhotoDetailsModal('@managePricing_IndexViewModel.PhotoMappingIdDic.Where(w=>w!=null && w.ProductPricingId.Equals(@row["ProductPricingId"].ToString(),StringComparison.OrdinalIgnoreCase) && w.Photo.Equals(Photo,StringComparison.OrdinalIgnoreCase)).Select(s=>s.ProductPhotoMappingId).FirstOrDefault()','@row["ProductPricingId"].ToString()','@count','@row["ProductId"]')"><i class="fa fa-pencil" style="color: orange !important;"></i></a>
+                                            <a onclick="DeletePhotoDetailsModal('@managePricing_IndexViewModel.PhotoMappingIdDic.Where(w=>w!=null && w.ProductPricingId.Equals(@row["ProductPricingId"].ToString(),StringComparison.OrdinalIgnoreCase) && w.Photo.Equals(Photo,StringComparison.OrdinalIgnoreCase)).Select(s=>s.ProductPhotoMappingId).FirstOrDefault()')"><i class="fa fa-trash-o" style="color: red !important;"></i></a>
                                         </div>
                                     </div>
                                     count++;
@@ -79,10 +81,12 @@
                             <!-- main slider carousel items -->
                             <div class="carousel-inner">
                                 <div class="active item" data-slide-number="0">
-                                    <img src="http://placehold.it/1200x480&amp;text=one" class="img-responsive">
+                                    <img src="http://placehold.it/1200x480&amp;text=one" class="img-responsive" onmouseover="ImageOverlay('@row["ProductPricingId"].ToString()-@count')">
                                 </div>
-                                <div class="overlay">
-                                    <div class="text">Hello World</div>
+                                <div class="overlay" id="@row["ProductPricingId"].ToString()-@count">
+                                    <div class="text">
+                                        <a onclick="CUPhotoDetailsModal('','@row["ProductPricingId"].ToString()','@count','@row["ProductId"]')"><i class="fa fa-plus" style="color: green !important;"></i></a>
+                                    </div>
                                 </div>
                             </div>
                             <a class="carousel-control left" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
@@ -132,6 +136,26 @@
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             }
+        </div>
+    </div>
+</div>
+
+<div id="DeletePhotoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="myModalLabel">Delete Photo</h3>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <h5><i><strong>Are you Sure, You want to Delete this Picture?</strong></i></h5>
+                    <input type="hidden" id="ProductPhotoMappingId_Delete" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel/Close</button>
+                <button class="btn btn-primary" onclick="DeletePhoto()">Save changes</button>
+            </div>
         </div>
     </div>
 </div>

@@ -25,7 +25,6 @@
             <strong id="SuccessMessage">@managePricing_IndexViewModel.SuccessMessage</strong>
         </div>
     }
-
     @using (Html.BeginForm("UploadPricingDetails", "ManagePricing", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
     {
         <div class="form-horizontal">
@@ -43,7 +42,6 @@
             </div>
         </div>
     }
-
     @using (Html.BeginForm("UploadProductImages", "ManagePricing", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
     {
         <div class="form-horizontal">
@@ -61,14 +59,12 @@
             </div>
         </div>
     }
-
 </div>
 <div class="container-fluid" id="ManagePricingDataTable">
     @{
         Html.RenderPartial("PricingDataTable", managePricing_IndexViewModel);
     }
 </div>
-
 <div id="UpdatePricingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -94,7 +90,6 @@
         </div>
     </div>
 </div>
-
 <div id="InsertPricingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -120,7 +115,6 @@
         </div>
     </div>
 </div>
-
 <div id="DeletePricingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -153,7 +147,6 @@
         <strong id="SuccessMessage_js"></strong>
     </div>
 </div>
-
 <script>
         function UpdatePricingModal(ProductPricingId, ProductId, ProductName, BuyPrice, SellPrice, Profit, MRP) {
             $("#ProductPricingId").val(ProductPricingId);
@@ -167,16 +160,16 @@
         }
         function UpdatePricingDetails() {
             var PricingDetailsModel = {
-                ProductPricingId:$("#ProductPricingId_Insert").val(),
-                ProductId:$("#ProductId_Insert").val(),
-                ProductName:$("#ProductName_Insert").val(),
-                BuyPrice:$("#BuyPrice_Insert").val(),
-                SellPrice:$("#SellPrice_Insert").val(),
-                Profit:$("#Profit_Insert").val(),
-                MRP:$("#MRP_Insert").val()
+                ProductPricingId:$("#ProductPricingId").val(),
+                ProductId:$("#ProductId").val(),
+                ProductName:$("#ProductName").val(),
+                BuyPrice:$("#BuyPrice").val(),
+                SellPrice:$("#SellPrice").val(),
+                Profit:$("#Profit").val(),
+                MRP:$("#MRP").val()
             }
             $.ajax({
-                url:'@Url.Action("AddPricingDetails", "ManagePricing")',
+                url:'@Url.Action("UpdatePricingDetails", "ManagePricing")',
                 type: 'POST',
                 data: PricingDetailsModel,
                 success: function (data) {
@@ -234,5 +227,24 @@
                     alert("Something wrong. Please check the internet connection!!!");
                 }
             });
+    }
+
+    function DeletePhoto() {
+        var ProductPhotoMappingId = $("#ProductPhotoMappingId_Delete").val();
+        $.ajax({
+            url: '@Url.Action("DeletePhotoDetails", "ManagePricing")',
+            type: 'POST',
+            data: { ProductPhotoMappingId: ProductPhotoMappingId },
+            success: function (data) {
+                window.location.reload();
+                },
+                error: function (e) {
+                    alert("Something wrong. Please check the internet connection!!!");
+                }
+            });
+    }
+    function DeletePhotoDetailsModal(ProductPhotoMappingId) {
+        $("#ProductPhotoMappingId_Delete").val(ProductPhotoMappingId);
+        $("#DeletePhotoModal").modal();
     }
 </script>

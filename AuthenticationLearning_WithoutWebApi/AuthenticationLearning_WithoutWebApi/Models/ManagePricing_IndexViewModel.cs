@@ -14,7 +14,7 @@ namespace AuthenticationLearning_WithoutWebApi.Models
         public string UserId { get; set; }
         public bool IsChampion { get; set; }
         public Dictionary<string, List<string>> ProductPhotoMappingDic { get; set;   }
-        public Dictionary<string, string> PhotoMappingIdDic { get; set; }
+        public List<PhotoMapping> PhotoMappingIdDic { get; set; }
         public string TotalItems { get; set; }
         public string TotalBuyValue { get; set; }
     }
@@ -28,5 +28,10 @@ namespace AuthenticationLearning_WithoutWebApi.Models
         public string ProductPhotoMappingId { get; set; }
     }
 
-
+    public class PhotoMapping
+    {
+        public string ProductPricingId { get; set; }
+        public string Photo { get; set; }
+        public string ProductPhotoMappingId { get; set; }
+    }
 }

@@ -330,7 +330,7 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult CUProductImage(HttpPostedFileBase ImageFile, string ProductId, string ProductPricingId, string Ordinal, string PhotoMappingId)
+        public ActionResult CUProductImage(HttpPostedFileBase ImageFile, string ProductId, string ProductPricingId, string Ordinal, string ProductPhotoMappingId)
         {
             string filename = ImageFile.FileName;
             string ImagePath= Server.MapPath("~/ProductImages/");
@@ -348,19 +348,23 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     pricingPhotoData.Photo = Base64;
                     pricingPhotoData.ProductId = ProductId;
                     pricingPhotoData.ProductPricingId = ProductPricingId;
-                    if (String.IsNullOrEmpty(PhotoMappingId))
+                    if (String.IsNullOrEmpty(ProductPhotoMappingId))
                     {
                         pricingPhotoData.ProductPhotoMappingId = Guid.NewGuid().ToString();
                         PricingDetailsProxy.CUDPricingPhotoDetails(pricingPhotoData, "Insert");
                     }
                     else
                     {
-                        pricingPhotoData.ProductPhotoMappingId = PhotoMappingId;
+                        pricingPhotoData.ProductPhotoMappingId = ProductPhotoMappingId;
                         PricingDetailsProxy.CUDPricingPhotoDetails(pricingPhotoData, "Update");
                     }
                     System.IO.File.Delete(ImagePath);
                     managePricing_IndexViewModel.SuccessMessage = UploadConstants.UploadSuccessMessage;
                     return RedirectToAction("Index", "ManagePricing", managePricing_IndexViewModel);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch(Exception e)
@@ -576,6 +580,59 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult DeletePhotoDetails(string ProductPhotoMappingId)
+        {
+
+            StringBuilder ErrorMessages = new StringBuilder();
+            StringBuilder SuccessMessages = new StringBuilder();
+            if (isAdminUser())
+            {
+                try
+                {
+                    PricingPhotoData pricingPhotoData = new PricingPhotoData();
+                    pricingPhotoData.ProductPhotoMappingId = ProductPhotoMappingId;
+                    bool DeleteResult = false;
+                    DeleteResult = PricingDetailsProxy.CUDPricingPhotoDetails(pricingPhotoData, "Delete");
+                    DataSet PricingDataSet = new DataSet();
+                    DataTable PricingDataTable = new DataTable();
+                    PricingDataSet = PricingDetailsProxy.FetchPricingDetails();
+                    PricingDataTable = PricingDataSet.Tables[0];
+                    PricingDataTable = DataTablePhotoMapping(PricingDataTable);
+                    managePricing_IndexViewModel.PricingDataTable = PricingDataTable;
+                    if (DeleteResult == false)
+                    {
+                        ErrorMessages.Append(CUDConstants.DeleteError);
+                    }
+                    else
+                    {
+                        SuccessMessages.Append(CUDConstants.DeleteSuccess);
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorMessages.Append(CUDConstants.DeleteError);
+                }
+                if (!String.IsNullOrEmpty(SuccessMessages.ToString()))
+                {
+                    managePricing_IndexViewModel.SuccessMessage = SuccessMessages.ToString();
+                }
+                if (!String.IsNullOrEmpty(ErrorMessages.ToString()))
+                {
+                    managePricing_IndexViewModel.ErrorMessage = ErrorMessages.ToString();
+                }
+
+                return PartialView("PricingDataTable", managePricing_IndexViewModel);
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
         private Boolean isAdminUser()
         {
             if (User.Identity.IsAuthenticated)
@@ -714,20 +771,31 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
         {
             Dictionary<string, List<string>> PhotoMappingDic = new Dictionary<string, List<string>>();
             List<string> Photos = new List<string>();
-            Dictionary<string, string> PhotoMappingIdDic = new Dictionary<string, string>();
+            List<PhotoMapping> PhotoMappingIdDic = new List<PhotoMapping>();
             foreach (DataRow datarow in PricingDataTable.Rows)
             {
+                PhotoMapping photoMapping = new PhotoMapping();
                 if (!PhotoMappingDic.ContainsKey(datarow["ProductPricingId"].ToString()) && !String.IsNullOrEmpty(datarow["Photo"].ToString()))
                 {
-                    Photos = new List<string>();
+                    Photos = new List<string>();                    
                     Photos.Add(datarow["Photo"].ToString());
                     PhotoMappingDic.Add(datarow["ProductPricingId"].ToString(), Photos);
-                    PhotoMappingIdDic.Add(datarow["Photo"].ToString(), datarow["ProductPhotoMappingId"].ToString());
+
+                    photoMapping.ProductPricingId = datarow["ProductPricingId"].ToString();
+                    photoMapping.ProductPhotoMappingId = datarow["ProductPhotoMappingId"].ToString();
+                    photoMapping.Photo = datarow["Photo"].ToString();
+
+                    PhotoMappingIdDic.Add(photoMapping);
                 }
                 else if (!String.IsNullOrEmpty(datarow["Photo"].ToString()))
                 {
                     PhotoMappingDic[datarow["ProductPricingId"].ToString()].Add(datarow["Photo"].ToString());
-                    PhotoMappingIdDic.Add(datarow["Photo"].ToString(), datarow["ProductPhotoMappingId"].ToString());
+
+                    photoMapping.ProductPricingId = datarow["ProductPricingId"].ToString();
+                    photoMapping.ProductPhotoMappingId = datarow["ProductPhotoMappingId"].ToString();
+                    photoMapping.Photo = datarow["Photo"].ToString();
+
+                    PhotoMappingIdDic.Add(photoMapping);
                 }
             }
             managePricing_IndexViewModel.ProductPhotoMappingDic = PhotoMappingDic;
