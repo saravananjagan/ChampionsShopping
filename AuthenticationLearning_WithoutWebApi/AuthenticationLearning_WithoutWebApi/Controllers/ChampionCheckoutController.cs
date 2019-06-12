@@ -216,7 +216,8 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                 var s = UserManager.GetRoles(user.GetUserId());
                 if (s[0].ToString() == "Champion" || (!string.IsNullOrEmpty(s[0].ToString()) && s[0].ToString().Equals("Customer")))
                 {
-                    return true;
+					ViewBag.RoleName = s[0].ToString();
+					return true;
                 }
                 else
                 {
