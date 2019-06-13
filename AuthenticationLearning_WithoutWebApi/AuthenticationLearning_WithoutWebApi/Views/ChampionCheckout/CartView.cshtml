@@ -9,7 +9,14 @@
     {
         if (managePricing_IndexViewModel.IsChampion)
         {
-            float profit = float.Parse(row["SellPrice"].ToString()) - float.Parse(row["BuyPrice"].ToString());
+            float profit = float.Parse("0");
+            if (roleName.Equals("Champion", StringComparison.OrdinalIgnoreCase))
+            {
+                 profit = float.Parse(row["SellPrice"].ToString()) - float.Parse(row["BuyPrice"].ToString());
+            }else if (roleName.Equals("Customer", StringComparison.OrdinalIgnoreCase))
+            {
+                 profit = float.Parse(row["MRP"].ToString()) - float.Parse(row["SellPrice"].ToString());
+            }
             float BuyPrice_Quantity = float.Parse(row["BuyPrice"].ToString()) * float.Parse(row["Quantity"].ToString());
             float SellPrice_Quantity = float.Parse(row["SellPrice"].ToString()) * float.Parse(row["Quantity"].ToString());
             float profit_Quantity = profit * float.Parse(row["Quantity"].ToString());
@@ -103,7 +110,14 @@
                                         </button>
                                     </div>
                                     <hr />
+@if (roleName.Equals("Champion", StringComparison.OrdinalIgnoreCase))
+{
                                     <h4 class="text-center">Profit / Item: Rs.@profit & Total Profit: @profit_Quantity</h4>
+}
+else
+{
+    <h4 class="text-center">Savings / Item: Rs.@profit & Total Savings: @profit_Quantity</h4>
+}
                                 </div>
                             </div>
                         </div>

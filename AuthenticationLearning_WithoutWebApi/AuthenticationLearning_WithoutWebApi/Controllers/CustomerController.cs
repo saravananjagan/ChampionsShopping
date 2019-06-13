@@ -40,7 +40,7 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     foreach (DataRow row in CumulativeCartDataTable.Rows)
                     {
                         managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
-                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        managePricing_IndexViewModel.TotalBuyValue = row["TotalSellValue"].ToString();
                     }
                     PricingDataTable = DataTablePhotoMapping(PricingDataTable);
                     if (PricingDataTable != null)
@@ -98,7 +98,7 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     foreach (DataRow row in CumulativeCartDataTable.Rows)
                     {
                         managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
-                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        managePricing_IndexViewModel.TotalBuyValue = row["TotalSellValue"].ToString();
                     }
                     #endregion
 
@@ -167,7 +167,7 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     foreach (DataRow row in CumulativeCartDataTable.Rows)
                     {
                         managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
-                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        managePricing_IndexViewModel.TotalBuyValue = row["TotalSellValue"].ToString();
                     }
                     #endregion
 

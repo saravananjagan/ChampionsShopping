@@ -1,8 +1,11 @@
-﻿@{
+﻿@using System.Data;
+@using AuthenticationLearning_WithoutWebApi.Models;
+@{
     ViewBag.Title = "Home Page";
+    ManagePricing_IndexViewModel managePricing_IndexViewModel = Model;
 }
 
-<div class="jumbotron">
+@*<div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
@@ -28,4 +31,99 @@
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
+</div>*@
+
+<h4>Champions Shopping</h4>
+<hr />
+<div class="row">
+    @foreach (DataRow row in managePricing_IndexViewModel.PricingDataTable.Rows)
+    {
+        float profit = float.Parse(row["SellPrice"].ToString()) - float.Parse(row["BuyPrice"].ToString());
+
+        <div class="col-lg-3 col-sm-4 col-xs-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    @row["ProductName"].ToString()
+                </div>
+                <div class="panel-body">
+                    <center>
+                        @*<img src="http://placehold.it/150X150" class="img-responsive" />*@
+                        @if (managePricing_IndexViewModel.ProductPhotoMappingDic.ContainsKey(row["ProductPricingId"].ToString()))
+                        {
+                            int count = 1;
+                            <div id="myCarousel_@row["ProductPricingId"].ToString()" class="carousel slide">
+                                <!-- main slider carousel items -->
+                                <div class="carousel-inner">
+                                    @foreach (string Photo in managePricing_IndexViewModel.ProductPhotoMappingDic[row["ProductPricingId"].ToString()].ToList())
+                                    {
+                                        if (count == 1)
+                                        {
+                                            <div class="active item" data-slide-number="@count">
+                                                <img src="data:image/png;base64, @Photo" class="img-responsive">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="item" data-slide-number="@count">
+                                                <img src="data:image/png;base64, @Photo" class="img-responsive">
+                                            </div>
+                                        }
+                                        count++;
+                                    }
+                                </div>
+                                <a class="carousel-control left" data-target="#myCarousel_@row["ProductPricingId"].ToString()" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                                <a class="carousel-control right" data-target="#myCarousel_@row["ProductPricingId"].ToString()" data-slide="next"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="myCarousel" class="carousel slide">
+                                <!-- main slider carousel items -->
+                                <div class="carousel-inner">
+                                    <div class="active item" data-slide-number="0">
+                                        <img src="http://placehold.it/1200x480&amp;text=one" class="img-responsive">
+                                    </div>
+                                </div>
+                                <a class="carousel-control left" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                                <a class="carousel-control right" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                            </div>
+                        }
+                    </center>
+                    <br />
+                    <p class="text-center lead">@row["ProductName"].ToString() - @row["ProductId"].ToString()</p>
+                    <h5 class="text-center">Price: Rs.@row["SellPrice"].ToString()</h5>
+                    <h5 class="text-center"><del>MRP: Rs.@row["MRP"].ToString()</del></h5>
+                </div>
+                @*<div class="panel-footer">                    
+                    <div class="row">
+                        @if (!string.IsNullOrEmpty(@row["IsCartItem"].ToString()) && @row["IsCartItem"].ToString() == "1")
+                        {
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus" data-field="" onclick="DecreaseCustomerCartQty('@row["ProductPricingId"].ToString()')">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </button>
+                                    </span>
+                                    <input type="text" id="quantity_@row["ProductPricingId"].ToString()" name="quantity" class="form-control input-number" value="@row["CartItemQuantity"].ToString()" min="1">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="" onclick="IncreaseCustomerCartQty('@row["ProductPricingId"].ToString()')">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <center>
+                                <button class="btn btn-success" onclick="UpdateCustomerCartItem('@row["ProductPricingId"].ToString()')">Add</button>
+                                <input type="text" style="display:none;" id="quantity_@row["ProductPricingId"].ToString()" name="quantity" class="form-control input-number" value="1" min="1">
+                            </center>
+                        }
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    }
 </div>

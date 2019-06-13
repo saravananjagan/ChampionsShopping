@@ -41,7 +41,15 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     foreach(DataRow row in CumulativeCartDataTable.Rows)
                     {
                         managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
-                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        string Role = GetRolesByUserId(UserId);
+                        if (Role.Equals("Champion", StringComparison.OrdinalIgnoreCase))
+                        {
+                            managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        }
+                        else if (Role.Equals("Customer", StringComparison.OrdinalIgnoreCase))
+                        {
+                            managePricing_IndexViewModel.TotalBuyValue = row["TotalSellValue"].ToString();
+                        }
                     }
                     PricingDataTable = DataTablePhotoMapping(PricingDataTable);
                     if (PricingDataTable != null)
@@ -98,7 +106,15 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     foreach (DataRow row in CumulativeCartDataTable.Rows)
                     {
                         managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
-                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        string Role = GetRolesByUserId(UserId);
+                        if (Role.Equals("Champion", StringComparison.OrdinalIgnoreCase))
+                        {
+                            managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        }
+                        else if (Role.Equals("Customer", StringComparison.OrdinalIgnoreCase))
+                        {
+                            managePricing_IndexViewModel.TotalBuyValue = row["TotalSellValue"].ToString();
+                        }
                     }
                     if (PricingDataTable != null)
                     {
@@ -163,7 +179,14 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                     foreach (DataRow row in CumulativeCartDataTable.Rows)
                     {
                         managePricing_IndexViewModel.TotalItems = row["TotalItems"].ToString();
-                        managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        string Role = GetRolesByUserId(UserId);
+                        if (Role.Equals("Champion", StringComparison.OrdinalIgnoreCase))
+                        {
+                            managePricing_IndexViewModel.TotalBuyValue = row["TotalBuyValue"].ToString();
+                        }else if(Role.Equals("Customer", StringComparison.OrdinalIgnoreCase))
+                        {
+                            managePricing_IndexViewModel.TotalBuyValue = row["TotalSellValue"].ToString();
+                        }
                     }
                     if (PricingDataTable != null)
                     {
@@ -225,6 +248,14 @@ namespace AuthenticationLearning_WithoutWebApi.Controllers
                 }
             }
             return false;
+        }
+
+        private string GetRolesByUserId(string userId)
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var s = UserManager.GetRoles(userId);
+            return s[0].ToString();
         }
 
         private DataTable RemoveDuplicateRows(DataTable dTable, string colName)
